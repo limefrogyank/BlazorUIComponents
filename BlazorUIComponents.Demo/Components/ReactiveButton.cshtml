@@ -1,0 +1,72 @@
+﻿@inherits ComponentBase
+
+<button class=@(_classes + (isActive? " active" : "")) disabled=@isDisabled onclick=@ButtonClicked >
+    @ChildContent
+</button>
+
+@functions{
+    [Parameter]
+    protected string Classes { get; set; }
+
+    [Parameter]
+    private object Command { get; set; }
+
+    [Parameter]
+    private object CommandParameter { get; set; }
+
+    [Parameter]
+    private RenderFragment ChildContent { get; set; }
+
+
+    private ElementRef reactiveButton;
+
+    private IDisposable canExecuteSub;
+    private bool isDisabled = false;
+    protected bool isActive = false;
+    protected string _classes;
+
+    public override Task SetParametersAsync(ParameterCollection parameters)
+    {
+        parameters.TryGetValue<string>("Classes", out _classes);
+//            _classes = _baseClasses;
+
+        if (parameters.TryGetValue<object>("Command", out var command))
+        {
+            Type t = command.GetType();
+            if (t.IsGenericType)
+            {
+                if (t.GetGenericTypeDefinition() == typeof(ReactiveCommand<,>)) //check the object is our type
+                {
+                    var canExecuteObs = (IObservable<bool>)t.GetProperty("CanExecute").GetValue(command);
+
+                    if (canExecuteSub != null)
+                        canExecuteSub.Dispose();
+                    canExecuteSub = canExecuteObs.Subscribe(canExecute =>
+                    {
+                        isDisabled = !canExecute;
+                        Invoke(()=> { StateHasChanged(); });
+                    });
+                }
+            }
+        }
+
+        return base.SetParametersAsync(parameters);
+    }
+
+    private Task ButtonClicked()
+    {
+        if (Command != null)
+        {
+            Type t = Command.GetType();
+            if (t.IsGenericType)
+            {
+                if (t.GetGenericTypeDefinition() == typeof(ReactiveCommand<,>)) //check the object is our type
+                {
+                    var method = t.GetMethod("Execute");
+                    ((IObservable<Task>)(method.Invoke(Command, new[] { CommandParameter }))).ObserveOn(RxApp.MainThreadScheduler).Subscribe();
+                }
+            }
+        }
+        return Task.CompletedTask;
+    }
+}

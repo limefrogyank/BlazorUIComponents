@@ -1,0 +1,81 @@
+@inherits ReactiveBase
+
+
+<div class="top-row pl-4 navbar navbar-dark">
+    <a class="navbar-brand" href="">BlazorUIComponents.Demo</a>
+    <button class="navbar-toggler" onclick="@ToggleNavMenu">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+</div>
+
+<div class="@NavMenuCssClass" onclick="@ToggleNavMenu">
+    <ul class="nav flex-column nav-pills">
+        <li class="nav-item px-3">
+            <ReactiveNavLink Classes="nav-link btn btn-outline-primary btn-block text-left"
+                             Command="@Vm.NavLinkCommand"
+                             CommandParameter="@Vm.ListViewDemoViewModel"
+                             Match="NavLinkMatch.Prefix"
+                             HRef="listview">
+                <span class="oi oi-home" aria-hidden="true"></span> Courses
+            </ReactiveNavLink>
+        </li>
+        <li class="nav-item px-3">
+            <ReactiveNavLink Classes="nav-link btn btn-outline-primary btn-block text-left"
+                             Command="@Vm.NavLinkCommand"
+                             CommandParameter="@Vm.CounterViewModel"
+                             HRef="counter">
+                <span class="oi oi-plus" aria-hidden="true"></span> Check In
+            </ReactiveNavLink>
+        </li>
+        <li class="nav-item px-3">
+            <ReactiveNavLink Classes="nav-link btn btn-outline-primary btn-block text-left"
+                             Command="@Vm.NavLinkCommand"
+                             CommandParameter="@Vm.FetchDataViewModel"
+                             HRef="fetchdata">
+                <span class="oi oi-list-rich" aria-hidden="true"></span> Fetch data2
+            </ReactiveNavLink>
+        </li>
+    </ul>
+
+</div>
+
+@functions {
+    bool collapseNavMenu = true;
+
+    string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+
+     MainViewModel Vm;
+    INavigationService navigationService;
+
+    protected override Task OnInitAsync()
+    {
+        navigationService = Locator.Current.GetService<INavigationService>();
+        Vm = Locator.Current.GetService<MainViewModel>();
+        RegisterViewModel(Vm);
+
+        return base.OnInitAsync();
+    }
+
+    async Task OnClickAsync(string href)
+    {
+        switch (href)
+        {
+            case "listview":
+                await navigationService.NavigateToAsync(Vm.ListViewDemoViewModel);
+                break;
+            case "checkin":
+                await navigationService.NavigateToAsync(Vm.CounterViewModel);
+                break;
+            default:
+                await navigationService.NavigateToAsync(Vm.FetchDataViewModel);
+                break;
+        }
+
+    }
+
+
+    void ToggleNavMenu()
+    {
+        collapseNavMenu = !collapseNavMenu;
+    }
+}

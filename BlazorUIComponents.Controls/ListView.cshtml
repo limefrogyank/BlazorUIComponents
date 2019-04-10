@@ -1,0 +1,88 @@
+﻿@using Microsoft.AspNetCore.Components;
+@using System.Collections.Specialized;
+
+@inherits ComponentBase
+
+@typeparam TItem;
+
+<CascadingValue Value=this>
+    <div class="list-group">
+        @for (var i = 0; i < ItemsSource.Count; i++)
+        {
+            var index = i;
+            var item = ItemsSource.ElementAt(index);
+            <ListViewItem Model=@item
+                          Index=@index
+                          ActiveItem=@SelectedItem
+                          Classes=@(baseClasses)
+                          ItemClicked=@(e=> OnItemClick(e,item))>
+                @ItemTemplate(item)
+            </ListViewItem>
+        }
+    </div>
+</CascadingValue>
+
+@functions{
+    private INotifyCollectionChanged notifyCollectionChanged;
+    private const string baseClasses = "list-group-item list-group-item-action";
+
+    [Parameter]
+    public TItem SelectedItem { get; private set; }
+
+    [Parameter]
+    public ICollection<TItem> ItemsSource { get; private set; }
+
+    [Parameter]
+    private RenderFragment<TItem> ItemTemplate { get; set; }
+
+    [Parameter]
+    public SelectionMode SelectionMode { get; private set; } = SelectionMode.None;
+
+    [Parameter]
+    private Func<TItem, Task> ItemClicked { get; set; }
+
+
+    public void SetSelectedItem(TItem selectedItem)
+    {
+        SelectedItem = selectedItem;
+        StateHasChanged();
+    }
+
+    protected override Task OnInitAsync()
+    {
+        // + " ms-scaleUpIn100"
+        return base.OnInitAsync();
+    }
+
+    protected override Task OnParametersSetAsync()
+    {
+        if (notifyCollectionChanged != ItemsSource)
+        {
+            if (notifyCollectionChanged != null)
+                notifyCollectionChanged.CollectionChanged -= CollectionChanged;
+
+            if (ItemsSource is INotifyCollectionChanged)
+            {
+                notifyCollectionChanged = (INotifyCollectionChanged)ItemsSource;
+                notifyCollectionChanged.CollectionChanged += CollectionChanged;
+            }
+        }
+
+        return base.OnParametersSetAsync();
+    }
+
+
+    private Task OnItemClick(UIMouseEventArgs e, TItem item)
+    {
+        if (ItemClicked != null)
+            return ItemClicked.Invoke(item);
+
+        return Task.CompletedTask;
+    }
+
+    private void CollectionChanged(object sender, NotifyCollectionChangedEventArgs args)
+    {
+        Invoke(() => StateHasChanged());
+    }
+
+}

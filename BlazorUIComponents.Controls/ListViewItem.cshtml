@@ -1,0 +1,49 @@
+﻿@inherits ComponentBase
+@typeparam TItem;
+
+    <button type="button" class=@(Classes + (Model.Equals(ActiveItem) ? " active" : ""))
+            onclick=@(e=> OnItemClick(e))>
+        @ChildContent
+    </button>
+
+@functions{
+    
+    [Parameter]
+    private string Classes { get; set; }
+
+    [CascadingParameter] ListView<TItem> Parent { get; set; }
+
+    [Parameter]
+    private TItem Model { get; set; }
+
+    [Parameter]
+    private TItem ActiveItem { get; set; }
+
+    [Parameter]
+    public int Index { get; private set; }
+
+    [Parameter]
+    private RenderFragment ChildContent { get; set; }
+
+    [Parameter]
+    private Func<UIMouseEventArgs,Task> ItemClicked { get; set; }
+
+    private Task OnItemClick(UIMouseEventArgs e)
+    {
+        if (Parent.SelectionMode == SelectionMode.None)
+        {
+            if (ItemClicked != null)
+                return ItemClicked.Invoke(e);
+            else
+                return Task.CompletedTask;
+        }
+        else if (Parent.SelectionMode == SelectionMode.Single)
+        {
+            Parent.SetSelectedItem(this.Model);
+        }
+        return Task.CompletedTask;
+    }
+
+
+
+}

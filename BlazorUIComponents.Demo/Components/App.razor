@@ -1,0 +1,36 @@
+﻿@*
+    The Router component displays whichever component has a @page
+    directive matching the current URI.
+*@
+
+@inject HttpClient client;
+@inject IJSRuntime JSRuntime
+@inject Microsoft.AspNetCore.Components.Services.IUriHelper UriHelper
+
+<Router AppAssembly="typeof(Startup).Assembly" />
+
+@functions{
+
+    protected override Task OnInitAsync()
+    {
+        Locator.CurrentMutable.RegisterConstant<IJSRuntime>(JSRuntime);
+        Locator.CurrentMutable.RegisterConstant<IUriHelper>(UriHelper);
+        Locator.CurrentMutable.RegisterConstant<HttpClient>(client);
+
+
+        Locator.CurrentMutable.Register<MainViewModel>();
+        Locator.CurrentMutable.Register<ListViewDemoViewModel>();
+        Locator.CurrentMutable.Register<CounterViewModel>();
+        Locator.CurrentMutable.Register<FetchDataViewModel>();
+
+
+        //Locator.CurrentMutable.RegisterConstant(new DataService(), typeof(IDataService));
+        Locator.CurrentMutable.RegisterConstant(new WeatherForecastService(), typeof(WeatherForecastService));
+
+        Locator.CurrentMutable.RegisterConstant(new DialogService(), typeof(IDialogService));
+        Locator.CurrentMutable.RegisterConstant(new NavigationService(), typeof(INavigationService));
+ 
+
+        return base.OnInitAsync();
+    }
+}
