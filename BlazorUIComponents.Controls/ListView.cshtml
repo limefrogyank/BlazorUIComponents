@@ -25,6 +25,7 @@
 @functions{
     private INotifyCollectionChanged notifyCollectionChanged;
     private const string baseClasses = "list-group-item list-group-item-action";
+    private SelectionMode selectionMode = SelectionMode.None;
 
     [Parameter]
     public TItem SelectedItem { get; private set; }
@@ -36,7 +37,14 @@
     private RenderFragment<TItem> ItemTemplate { get; set; }
 
     [Parameter]
-    public SelectionMode SelectionMode { get; private set; } = SelectionMode.None;
+    public SelectionMode SelectionMode { get => selectionMode;
+        private set
+        {
+            selectionMode = value;
+            if (selectionMode == SelectionMode.None)
+                SetSelectedItem(default(TItem));
+        }
+    }
 
     [Parameter]
     public Action<TItem> OnSelectedItemChanged { get; private set; }
