@@ -41,6 +41,8 @@ namespace BlazorUIComponents.Demo.UWP
         {
             Frame rootFrame = Window.Current.Content as Frame;
 
+            new AppBootstrapper();
+
             // Do not repeat app initialization when the Window already has content,
             // just ensure that the window is active
             if (rootFrame == null)

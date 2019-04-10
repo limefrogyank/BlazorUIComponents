@@ -120,5 +120,10 @@ namespace BlazorUIComponents.Demo.Service
             uriHelper.NavigateTo(path);
             return Task.CompletedTask;
         }
+
+        public void Initialize(object initializationItem)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

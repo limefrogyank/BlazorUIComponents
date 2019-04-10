@@ -57,7 +57,7 @@
 
     async void ShowModal()
     {
-        //can't pass ElementRef to ViewModel because it's NOT an object.  Need to pass callback instead.
+        //can't pass ElementRef to ViewModel because it's NOT an object.  Need to pass this callback instead... using CommandParameter works.
         await JSRuntime.InvokeAsync<object>("showModal", modal);
     }
 
@@ -69,7 +69,6 @@
     Task OnItemClicked(Core.ViewModel.ListViewDemo.WeatherItemViewModel item)
     {
         Vm.WeatherItemClickCommand.Execute(item).Subscribe();
-        //UriHelper.NavigateTo($"/course/{item.Id}");
         return Task.CompletedTask;
     }
 

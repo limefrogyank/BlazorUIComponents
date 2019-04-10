@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reactive;
+using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -50,6 +51,13 @@ namespace BlazorUIComponents.Core.ViewModel
             {
                 return navigationService.NavigateToAsync(vm);
             });
+
+            //IsEnabled was for another project that required login... this was toggled when login was successful.  For now, I'm just going to make it true.
+            Observable.Create<bool>((obs) =>
+            {
+                obs.OnNext(true);
+                return Disposable.Empty;
+            }).ToProperty(this, x => x.IsEnabled, out isEnabled);
 
         }
 

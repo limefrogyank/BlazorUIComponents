@@ -119,10 +119,23 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="AppBootstrapper.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service\DialogService.cs" />
+    <Compile Include="Service\NavigationService.cs" />
+    <Compile Include="View\CounterView.xaml.cs">
+      <DependentUpon>CounterView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\FetchDataView.xaml.cs">
+      <DependentUpon>FetchDataView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ListViewDemoView.xaml.cs">
+      <DependentUpon>ListViewDemoView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\PageBase.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -149,12 +162,34 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="View\CounterView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\FetchDataView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ListViewDemoView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.2.8</Version>
     </PackageReference>
+    <PackageReference Include="ReactiveUI">
+      <Version>10.0.0-preview.3</Version>
+    </PackageReference>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BlazorUIComponents.Core\BlazorUIComponents.Core.csproj">
+      <Project>{d62fb863-95b7-4a53-934c-11005473c923}</Project>
+      <Name>BlazorUIComponents.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

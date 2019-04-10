@@ -6,9 +6,43 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
+    xmlns:rxui="using:ReactiveUI"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid>
+    <NavigationView x:Name="navMenu"
+                    IsSettingsVisible="False"
+                    ItemInvoked="NavMenu_ItemInvoked"
+                    IsBackButtonVisible="Collapsed"
+                    >
+        <NavigationView.MenuItems>
+            <NavigationViewItem DataContext="{x:Bind ViewModel.ListViewDemoViewModel}"
+                                IsEnabled="{x:Bind ViewModel.IsEnabled, Mode=OneWay}"
+                                Content="{x:Bind ViewModel.ListViewDemoViewModel.UrlPathSegment}">
+                <NavigationViewItem.Icon>
+                    <FontIcon Glyph="{x:Bind ViewModel.ListViewDemoViewModel.Icon}"/>
+                </NavigationViewItem.Icon>
+            </NavigationViewItem>
+            <NavigationViewItem DataContext="{x:Bind ViewModel.CounterViewModel}"
+                                IsEnabled="{x:Bind ViewModel.IsEnabled, Mode=OneWay}"
+                                Content="{x:Bind ViewModel.CounterViewModel.UrlPathSegment}">
+                <NavigationViewItem.Icon>
+                    <FontIcon Glyph="{x:Bind ViewModel.CounterViewModel.Icon}"/>
+                </NavigationViewItem.Icon>
+            </NavigationViewItem>
+            <NavigationViewItem DataContext="{x:Bind ViewModel.FetchDataViewModel}"
+                                IsEnabled="{x:Bind ViewModel.IsEnabled, Mode=OneWay}"
+                                Content="{x:Bind ViewModel.FetchDataViewModel.UrlPathSegment}">
+                <NavigationViewItem.Icon>
+                    <FontIcon Glyph="{x:Bind ViewModel.FetchDataViewModel.Icon}"/>
+                </NavigationViewItem.Icon>
+            </NavigationViewItem>
+        </NavigationView.MenuItems>
 
-    </Grid>
+        <!--<NavigationView.PaneFooter>
+            <rxui:ViewModelViewHost ViewModel="{x:Bind ViewModel.LoginViewModel}"/>
+        </NavigationView.PaneFooter>-->
+      
+        <Frame x:Name="navMenuFrame"/>
+        <!--<rxui:ViewModelViewHost ViewModel="{x:Bind ViewModel.SelectedItem, Mode=OneWay}"/>-->
+    </NavigationView>
 </Page>

@@ -1,4 +1,7 @@
-﻿using System;
+﻿using BlazorUIComponents.Core;
+using BlazorUIComponents.Core.Service;
+using BlazorUIComponents.Core.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -17,14 +20,71 @@ using Windows.UI.Xaml.Navigation;
 
 namespace BlazorUIComponents.Demo.UWP
 {
-    /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
-    /// </summary>
+
     public sealed partial class MainPage : Page
     {
+        private readonly INavigationService navService;
+        public MainViewModel ViewModel { get; set; }
+        private object lastItem;
+
         public MainPage()
         {
             this.InitializeComponent();
+            navService = Splat.Locator.Current.GetServiceExt<INavigationService>();
+
+            //authService.IsLoggedIn.ObserveOn(RxApp.MainThreadScheduler).Subscribe((isLoggedIn) =>
+            //{
+            //    if (isLoggedIn)
+            //        TurnOnMenuItems();
+            //});
+
+            navService.Initialize(navMenuFrame);
+            navService.Navigated.Subscribe((vm) =>
+            {
+                //if (vm != ViewModel.SettingsViewModel)
+                {
+                    var menuItem = navMenu.MenuItems.Cast<NavigationViewItemBase>().FirstOrDefault(x => x.DataContext == vm);
+                    if (menuItem != null)
+                        navMenu.SelectedItem = menuItem;
+                }
+                //else
+                //{
+                //    navMenu.SelectedItem = navMenu.SettingsItem;
+                //}
+            });
+            ViewModel = Splat.Locator.Current.GetServiceExt<MainViewModel>();
+
+            TurnOnMenuItems();
         }
+
+        public void TurnOnMenuItems()
+        {
+            lastItem = navMenu.MenuItems[0];
+            navMenu.SelectedItem = navMenu.MenuItems[0];
+            navService.NavigateToAsync(ViewModel.ListViewDemoViewModel);
+        }
+
+        private async void NavMenu_ItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args)
+        {
+            //if (args.IsSettingsInvoked)
+            //{
+            //    if (lastItem != args.InvokedItemContainer)
+            //    {
+            //        lastItem = args.InvokedItemContainer;
+            //        await navService.NavigateToAsync(ViewModel.SettingsViewModel);
+            //    }
+            //}
+            //else
+            {
+                if (lastItem != args.InvokedItemContainer)
+                {
+                    lastItem = args.InvokedItemContainer;
+                    await navService.NavigateToAsync(args.InvokedItemContainer.DataContext);
+                }
+            }
+        }
+
+
+
     }
 }
