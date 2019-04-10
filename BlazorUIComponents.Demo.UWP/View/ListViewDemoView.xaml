@@ -10,7 +10,14 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <TextBlock Text="ListView Demo" 
+                   Style="{ThemeResource HeaderTextBlockStyle}"/>
         <ListView ItemsSource="{x:Bind ViewModel.WeatherItemViewModels}"
+                  Grid.Row="1"
                   >
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="vm:WeatherItemViewModel">

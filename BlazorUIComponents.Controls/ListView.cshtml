@@ -57,7 +57,7 @@
     {
         SelectedItem = selectedItem;
         if (OnSelectedItemChanged != null)
-            OnSelectedItemChanged.Invoke(SelectedItem);//new UIChangeEventArgs() { Value = SelectedItem , Type=typeof(TItem).ToString()});
+            OnSelectedItemChanged.Invoke(SelectedItem);
 
         StateHasChanged();
     }
