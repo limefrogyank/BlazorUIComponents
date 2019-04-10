@@ -23,5 +23,6 @@ As you can see, properties are automatically updated on the view with a `StateHa
 
 BTW, this included version of ReactiveUI is hacked and taken directly from here:
 https://github.com/Nethereum/ReactiveUI/tree/7ec6ef58dd469d90bce6ead32504630d15f03bc5
+Do NOT use it for UWP/Android/iOS/Xamarin.... it's only for Blazor that is technically dotnet framework, but still requires all of the UI stuff.
 
 (Sorry, I suck at git and had to remove all the bindings.)
