@@ -17,8 +17,11 @@ namespace BlazorUIComponents.Core.ViewModel
         private readonly WeatherForecastService weatherForecastService;
 
         private SourceList<WeatherForecast> weatherItemList = new SourceList<WeatherForecast>();
-        
+        private WeatherItemViewModel selectedItem;
+
         public IObservableCollection<WeatherItemViewModel> WeatherItemViewModels { get; private set; } = new ObservableCollectionExtended<WeatherItemViewModel>();
+
+        public WeatherItemViewModel SelectedItem { get => selectedItem; set => this.RaiseAndSetIfChanged(ref selectedItem, value); }
 
         public ReactiveCommand<Action, Task> AddWeatherItemCommand { get; }
         public ReactiveCommand<Action<WeatherItemViewModel>, Task> ShowWeatherDialogCommand { get; }

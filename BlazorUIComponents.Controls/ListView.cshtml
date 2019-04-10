@@ -39,18 +39,23 @@
     public SelectionMode SelectionMode { get; private set; } = SelectionMode.None;
 
     [Parameter]
+    public Action<TItem> OnSelectedItemChanged { get; private set; }
+
+    [Parameter]
     private Func<TItem, Task> ItemClicked { get; set; }
 
 
     public void SetSelectedItem(TItem selectedItem)
     {
         SelectedItem = selectedItem;
+        if (OnSelectedItemChanged != null)
+            OnSelectedItemChanged.Invoke(SelectedItem);//new UIChangeEventArgs() { Value = SelectedItem , Type=typeof(TItem).ToString()});
+
         StateHasChanged();
     }
 
     protected override Task OnInitAsync()
     {
-        // + " ms-scaleUpIn100"
         return base.OnInitAsync();
     }
 
@@ -74,9 +79,15 @@
 
     private Task OnItemClick(UIMouseEventArgs e, TItem item)
     {
-        if (ItemClicked != null)
-            return ItemClicked.Invoke(item);
-
+        if (SelectionMode == SelectionMode.None)
+        {
+            if (ItemClicked != null)
+                return ItemClicked.Invoke(item);
+        }
+        else if (SelectionMode == SelectionMode.Single)
+        {
+            SetSelectedItem(item);
+        }
         return Task.CompletedTask;
     }
 
