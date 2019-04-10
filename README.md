@@ -8,3 +8,14 @@ At attempt to make Blazor components that mimic UWP/Xamarin controls, follow MVV
 
 # To use
 1.  All of your pages that require navigation should inherit `NavPageBase<>` with the viewmodel for the page as the generic parameter.
+2.  For views that don't require navigation (they are part of a larger page), you can inherit `ReactiveBase` instead and manually call `RegisterViewModel(Vm)` after you pull in the corrent viewmodel from Splat manually.  Sorry, no `ViewModelViewHost` yet.  Something like this:
+```
+    private LoginViewModel Vm;
+
+    protected override async Task OnInitAsync()
+    {
+        Vm = Locator.Current.GetService<LoginViewModel>();
+        this.RegisterViewModel(Vm);
+        await base.OnInitAsync();
+    }
+```
