@@ -1,7 +1,7 @@
 # BlazorUIComponents
 At attempt to make Blazor components that mimic UWP/Xamarin controls, follow MVVM (ViewModel nav) guidelines, and use the ReactiveUI framework.
 
-Blazor client-side using WASM will NOT work with ReactiveUI due to WASM (and Mono's port for WASM) being single-threaded.  For now, you can only use Razor Components (server-side Blazor using SignalR) with ReactiveUI.
+Blazor client-side using WASM will NOT work with ReactiveUI due to Mono's port for Web Assembly being single-threaded.  For now, you can only use Razor Components (server-side Blazor using SignalR) with ReactiveUI.
 
 # Problems
 1. Navigation is half-finished.  Refreshes and direct links will not work.  They just make the app go back to the first page.  But everything else works.  
