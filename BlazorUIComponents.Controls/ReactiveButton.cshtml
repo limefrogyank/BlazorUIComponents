@@ -1,6 +1,16 @@
-﻿@inherits ComponentBase
+﻿@using Microsoft.AspNetCore.Components.Forms
+@using Microsoft.AspNetCore.Components.Layouts
+@using Microsoft.AspNetCore.Components.Routing
+@using Microsoft.AspNetCore.Components.Services;
+@using Microsoft.AspNetCore.Components;
+@using ReactiveUI;
+@using System.Reactive.Linq;
+@using System.Reactive;
 
-<button class=@(_classes + (isActive? " active" : "")) disabled=@isDisabled onclick=@ButtonClicked >
+
+@inherits ComponentBase
+
+<button class=@(_classes + (isActive? " active" : "")) disabled=@isDisabled onclick=@ButtonClicked>
     @ChildContent
 </button>
 
@@ -28,7 +38,7 @@
     public override Task SetParametersAsync(ParameterCollection parameters)
     {
         parameters.TryGetValue<string>("Classes", out _classes);
-//            _classes = _baseClasses;
+        //            _classes = _baseClasses;
 
         if (parameters.TryGetValue<object>("Command", out var command))
         {
@@ -44,7 +54,7 @@
                     canExecuteSub = canExecuteObs.Subscribe(canExecute =>
                     {
                         isDisabled = !canExecute;
-                        Invoke(()=> { StateHasChanged(); });
+                        Invoke(() => { StateHasChanged(); });
                     });
                 }
             }

@@ -20,10 +20,9 @@ namespace BlazorUIComponents.Demo.Components
         [Inject] IUriHelper uriHelper { get; set; }
         [Inject] IJSRuntime jSRuntime { get; set; }
 
-        public NavPageBase()
+        public NavPageBase():base()
         {
-
-
+            
         }
 
         protected override Task OnInitAsync()
@@ -48,6 +47,7 @@ namespace BlazorUIComponents.Demo.Components
 
                 }
                 Vm = (T)vm;
+                RegisterViewModel(Vm);
                 Invoke(() => StateHasChanged());
             }, (onError) => Debug.WriteLine(onError.Message));
 

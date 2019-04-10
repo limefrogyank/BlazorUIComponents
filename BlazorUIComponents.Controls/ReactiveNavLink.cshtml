@@ -1,7 +1,13 @@
-﻿@inherits ReactiveButton
+﻿@using Microsoft.AspNetCore.Components;
+@using Microsoft.AspNetCore.Components.Forms
+@using Microsoft.AspNetCore.Components.Layouts
+@using Microsoft.AspNetCore.Components.Routing
+@using Microsoft.AspNetCore.Components.Services;
 
 
-@inject IUriHelper UriHelper
+@inherits ReactiveButton
+
+@inject Microsoft.AspNetCore.Components.Services.IUriHelper UriHelper
 
 @functions{
 
