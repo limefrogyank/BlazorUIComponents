@@ -7,7 +7,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace BlazorUIComponents.Demo.Components
+namespace BlazorUIComponents.Controls
 {
     public abstract class ReactiveBase : ComponentBase
     {

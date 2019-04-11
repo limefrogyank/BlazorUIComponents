@@ -11,7 +11,7 @@ using System.Linq;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 
-namespace BlazorUIComponents.Demo.Components
+namespace BlazorUIComponents.Controls
 {
     public class NavPageBase<T> : ReactiveBase where T : class
     {
@@ -20,9 +20,9 @@ namespace BlazorUIComponents.Demo.Components
         [Inject] IUriHelper uriHelper { get; set; }
         [Inject] IJSRuntime jSRuntime { get; set; }
 
-        public NavPageBase():base()
+        public NavPageBase() : base()
         {
-            
+
         }
 
         protected override Task OnInitAsync()
