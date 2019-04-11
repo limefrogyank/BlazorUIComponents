@@ -16,14 +16,22 @@
 
 @functions
 {
-    MainViewModel Vm;
+        MainViewModel Vm;
+
+    [CascadingParameter(Name = "PreRendering")]
+    protected bool IsPreRendering { get; set; }
 
     protected override Task OnInitAsync()
     {
-        Vm = Locator.Current.GetService<MainViewModel>();
+        if (!IsPreRendering)
+        {
+            var navService = Locator.Current.GetService<INavigationService>();
+            Vm = Locator.Current.GetService<MainViewModel>();
 
-        RegisterViewModel(Vm);
+            RegisterViewModel(Vm);
 
+            navService.NavigateToAsync(Vm.ListViewDemoViewModel);
+        }
         return base.OnInitAsync();
     }
 }

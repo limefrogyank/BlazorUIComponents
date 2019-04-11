@@ -7,7 +7,10 @@
 @inject IJSRuntime JSRuntime
 @inject Microsoft.AspNetCore.Components.Services.IUriHelper UriHelper
 
-<Router AppAssembly="typeof(Startup).Assembly" />
+@* This PreRenderCascade component lets us know when we're doing server-side prerendering so we can avoid logic that uses JSRuntime or Navigation (IUriHelper) that's for client only. *@
+<PreRenderCascade>
+    <Router AppAssembly="typeof(Startup).Assembly" />
+</PreRenderCascade>
 
 @functions{
 
