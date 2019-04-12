@@ -1,4 +1,5 @@
 ﻿using BlazorUIComponents.Core.Service;
+using Microsoft.JSInterop;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,16 +9,18 @@ namespace BlazorUIComponents.Demo.Service
 {
     public class DialogService : IDialogService
     {
-        public Task HideModalAsync(Action hideModalAction)
+        private Func<string, string, string, Task<string>> showModalFunc;
+
+        public void Register(Func<string, string, string, Task<string>> showModalFunc)
         {
-            hideModalAction.Invoke();
-            return Task.CompletedTask;
+            this.showModalFunc = showModalFunc;
         }
 
-        public Task ShowModalAsync(Action showModalAction)
+        public async Task<string> ShowSingleInputModalAsync(string title, string description, string inputHeader)
         {
-            showModalAction.Invoke();
-            return Task.CompletedTask;
+            var result = await showModalFunc.Invoke(title, description, inputHeader);
+            return result;
+
         }
     }
 }

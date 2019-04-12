@@ -1,4 +1,7 @@
-﻿using BlazorUIComponents.Core;
+﻿
+
+using BlazorUIComponents.Controls;
+using BlazorUIComponents.Core;
 using BlazorUIComponents.Core.Service;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Services;
@@ -11,7 +14,7 @@ using System.Linq;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 
-namespace BlazorUIComponents.Controls
+namespace BlazorUIComponents.Demo.Components
 {
     public class NavPageBase<T> : ReactiveBase where T : class
     {

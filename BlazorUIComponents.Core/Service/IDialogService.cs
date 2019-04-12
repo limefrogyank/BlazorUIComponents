@@ -5,7 +5,6 @@ namespace BlazorUIComponents.Core.Service
 {
     public interface IDialogService
     {
-        Task HideModalAsync(Action hideModalAction);
-        Task ShowModalAsync(Action showModalAction);
+        Task<string> ShowSingleInputModalAsync(string title, string description, string inputHeader);
     }
 }

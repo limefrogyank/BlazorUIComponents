@@ -16,17 +16,17 @@
         </Grid.RowDefinitions>
         <TextBlock Text="ListView Demo" 
                    Style="{ThemeResource HeaderTextBlockStyle}"/>
-        <ListView ItemsSource="{x:Bind ViewModel.WeatherItemViewModels}"
+        <ListView ItemsSource="{x:Bind ViewModel.SampleItemViewModels}"
                   Grid.Row="1"
                   >
             <ListView.ItemTemplate>
-                <DataTemplate x:DataType="vm:WeatherItemViewModel">
+                <DataTemplate x:DataType="vm:SampleItemViewModel">
                     <StackPanel>
+                        <TextBlock Text="{x:Bind DisplayName}"
+                                   Style="{ThemeResource SubheaderTextBlockStyle}"></TextBlock>
                         <TextBlock Text="{x:Bind Date}"
-                                   Style="{ThemeResource HeaderTextBlockStyle}"></TextBlock>
-                        <TextBlock Text="{x:Bind TemperatureC}"></TextBlock>
-                        <TextBlock Text="{x:Bind TemperatureF}"></TextBlock>
-                        <TextBlock Text="{x:Bind Summary}"></TextBlock>
+                                   Style="{ThemeResource TitleTextBlockStyle}"></TextBlock>
+                        
                     </StackPanel>
                 </DataTemplate>
             </ListView.ItemTemplate>

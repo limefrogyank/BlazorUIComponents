@@ -8,11 +8,19 @@
 @inject Microsoft.AspNetCore.Components.Services.IUriHelper UriHelper
 
 @* This PreRenderCascade component lets us know when we're doing server-side prerendering so we can avoid logic that uses JSRuntime or Navigation (IUriHelper) that's for client only. *@
-<PreRenderCascade>
-    <Router AppAssembly="typeof(Startup).Assembly" />
-</PreRenderCascade>
+    <PreRenderCascade>
+
+        <EmbeddedContent BaseType="@(typeof(SingleInputModalView))" />
+
+        <SingleInputModalView ref="singleInputModalView"></SingleInputModalView>
+
+        <Router AppAssembly="typeof(Startup).Assembly" />
+
+    </PreRenderCascade>
 
 @functions{
+    private SingleInputModalView singleInputModalView;
+    private DialogService dialogService;
 
     protected override Task OnInitAsync()
     {
@@ -30,10 +38,18 @@
         //Locator.CurrentMutable.RegisterConstant(new DataService(), typeof(IDataService));
         Locator.CurrentMutable.RegisterConstant(new WeatherForecastService(), typeof(WeatherForecastService));
 
-        Locator.CurrentMutable.RegisterConstant(new DialogService(), typeof(IDialogService));
+        dialogService = new DialogService();
+        Locator.CurrentMutable.RegisterConstant(dialogService, typeof(IDialogService));
         Locator.CurrentMutable.RegisterConstant(new NavigationService(), typeof(INavigationService));
- 
+
 
         return base.OnInitAsync();
+    }
+
+    protected async override Task OnAfterRenderAsync()
+    {
+        dialogService.Register(singleInputModalView.ShowModalAsync);
+
+        await base.OnAfterRenderAsync();
     }
 }

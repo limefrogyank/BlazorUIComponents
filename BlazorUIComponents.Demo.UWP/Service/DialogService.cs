@@ -8,13 +8,9 @@ using System.Threading.Tasks;
 namespace BlazorUIComponents.Demo.UWP.Service
 {
     public class DialogService : IDialogService
-    {
-        public Task HideModalAsync(Action hideModalAction)
-        {
-            throw new NotImplementedException();
-        }
+    {      
 
-        public Task ShowModalAsync(Action showModalAction)
+        public Task<string> ShowSingleInputModalAsync(string title, string description, string inputHeader)
         {
             throw new NotImplementedException();
         }

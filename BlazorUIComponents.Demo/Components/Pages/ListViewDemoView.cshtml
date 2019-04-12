@@ -5,31 +5,6 @@
 
 <h1>ListView Demo</h1>
 
-@*<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" ref="modal">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Add a Course</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label for="recipient-name" class="col-form-label">Course Name:</label>
-                        <input type="text" class="form-control" id="course-name" bind-value-oninput=@Vm.CourseName onkeypress=@OnKeyPressed />
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <ReactiveButton Classes="btn btn-primary" Command="@Vm.AddCourseCommand" CommandParameter=@HideModal>Add Course</ReactiveButton>
-                </div>
-            </div>
-        </div>
-    </div>*@
-
-
-
 <div class="custom-control custom-switch">
     <input type="checkbox" class="custom-control-input" id="customSwitch1" bind="@isChecked" />
     <label class="custom-control-label" for="customSwitch1">@(isChecked ? SelectionMode.Single : SelectionMode.None)</label>
@@ -38,44 +13,32 @@
 
 @if (isChecked)
 {
-    <div>Selected Item:  @Vm.SelectedItem?.Summary</div>  
+    <div>Selected Item:  @Vm.SelectedItem?.DisplayName</div>  
     @*There's a brief time period when isChecked is true and Vm.SelectedItem is still null... use null checking '?'*@
 }
 
+<ReactiveButton Classes="btn btn-primary" Command="@Vm.AddSampleItemCommand" >Add Item</ReactiveButton>
 
-<ListView ItemsSource="@Vm.WeatherItemViewModels"
-          TItem="Core.ViewModel.ListViewDemo.WeatherItemViewModel"
+<ListView ItemsSource="@Vm.SampleItemViewModels"
+          TItem="Core.ViewModel.ListViewDemo.SampleItemViewModel"
           SelectionMode=@(isChecked ? SelectionMode.Single : SelectionMode.None)
           bind-SelectedItem-OnSelectedItemChanged="@Vm.SelectedItem"
 
           ItemClicked=@OnItemClicked>
     <ItemTemplate Context="item">
-        <h3>@item.Date</h3>
-        <div>@item.TemperatureC</div>
-        <div>@item.TemperatureF</div>
-        <div>@item.Summary</div>
+        <h4>@item.DisplayName</h4>
+        <h5>@item.Date</h5>
     </ItemTemplate>
 </ListView>
 
 @functions {
-    private ElementRef modal;
-
+  
     bool isChecked = false;
 
-    async void ShowModal()
+   
+    Task OnItemClicked(Core.ViewModel.ListViewDemo.SampleItemViewModel item)
     {
-        //can't pass ElementRef to ViewModel because it's NOT an object.  Need to pass this callback instead... using CommandParameter works.
-        await JSRuntime.InvokeAsync<object>("showModal", modal);
-    }
-
-    async void HideModal()
-    {
-        await JSRuntime.InvokeAsync<object>("hideModal", modal);
-    }
-
-    Task OnItemClicked(Core.ViewModel.ListViewDemo.WeatherItemViewModel item)
-    {
-        Vm.WeatherItemClickCommand.Execute(item).Subscribe();
+        Vm.SampleItemClickCommand.Execute(item).Subscribe();
         return Task.CompletedTask;
     }
 

@@ -6,3 +6,5 @@ window.exampleJsFunctions = {
     return prompt(message, 'Type anything here');
   }
 };
+
+
