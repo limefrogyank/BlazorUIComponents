@@ -1,9 +1,9 @@
-﻿window.singleInputModalView = {
+﻿window.confirmationModalView = {
 
     initialize: function (element, pageRef) {
 
         $(element).on('hide.bs.modal', function (e) {
-            pageRef.invokeMethodAsync('NotifySingleInputModalViewHidden');
+            pageRef.invokeMethodAsync('NotifyConfirmationModalViewHidden');
         });
 
     },

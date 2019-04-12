@@ -23,6 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="content\ConfirmationModalView.js" />
     <None Remove="content\singleInputModalView.js" />
   </ItemGroup>
 
