@@ -14,10 +14,8 @@ http://blazoruicomponents.azurewebsites.net/
 
 # Dependencies
 1.  ReactiveUI - a hacked version that allows UI stuff in a plain .NET Standard project.  (Don't use it for regular platforms.)
-2.  DotNetCore v3.0.0-preview3  (required for Razor Components (aka Server-side Blazor)
+2.  DotNetCore v3.0.0-preview4  (required for Blazor)
 3.  Bootstrap 4 javascript files - required to make the Dialog stuff work... 
-4.  PreRenderComponent (available via NuGet or https://github.com/SQL-MisterMagoo/PreRenderComponent) - this detects when you're currently prerendering on the server so you don't try to make UI specific calls.  Only required for the initial page load.
-5.  BlazorEmbedLibrary (available via NuGet or https://github.com/SQL-MisterMagoo/BlazorEmbedLibrary) - there is a bug in AspNetCore where external component library projects don't embed their javascript files into your project.  This package does it for you.
 
 
 # To use
