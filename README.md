@@ -11,6 +11,7 @@ http://blazoruicomponents.azurewebsites.net/
 1. Navigation is half-finished.  Refreshes and direct links will not work.  They just make the app go back to the first page (or crash in my live demo).  But everything else works.  
 2. Since I am trying to do Viewmodel-based navigation, using links (\<a href=''\>\</a\>) are not going to work.  I couldn't use Bootstrap's nice navigation bar since it depends on those links.  I had to use buttons instead.  
 3. Do NOT use AspNetCore dependency injection for your services and viewmodels.  You will likely need access to IJSRuntime and IUriHelper and if you try to pull those into your viewmodels using dependency-injection from AspNetCore's default container, you'll get the server-side version of each.  And the IJSRuntime won't work.  You want the remote or client version.  So put all your registrations for Splat into the App.razor file.  The client-side has the correct IJSRuntime implementation.
+4. Component libraries are somewhat broken.  Javascript files do NOT get included into your main Blazor app automatically.  For now, you must **copy** them to your wwwroot folder and reference them with script tags in the _\_Hosts.cshtml_ file
 
 # Dependencies
 1.  ReactiveUI - a hacked version that allows UI stuff in a plain .NET Standard project.  (Don't use it for regular platforms.)
