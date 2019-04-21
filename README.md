@@ -3,7 +3,7 @@ At attempt to make Blazor components that mimic UWP/Xamarin controls, follow MVV
 
 Blazor client-side using WASM will NOT work with ReactiveUI due to Mono's port for Web Assembly being single-threaded.  For now, you can only use Razor Components (server-side Blazor using SignalR) with ReactiveUI.
 
-# Working Web Demo
+# (Not quite) Working Web Demo (since prev 4 update)
 
 http://blazoruicomponents.azurewebsites.net/
 
