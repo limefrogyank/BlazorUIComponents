@@ -1,0 +1,11 @@
+@page "/counter"
+
+@inherits NavPageBase<CounterViewModel>
+
+
+<h1>Counter</h1>
+@if (Vm != null)
+{
+<p>Current count: @Vm.Count</p>
+<ReactiveButton Classes="btn btn-primary" Command=@Vm.IncrementCountCommand>Click me</ReactiveButton>
+}

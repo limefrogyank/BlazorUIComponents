@@ -5,7 +5,8 @@
 <h1>Weather forecast</h1>
 
 <p>This component demonstrates fetching data from a service.</p>
-
+@if (Vm != null)
+{
 @if (Vm.WeatherForecastItems.Count == 0)
 {
     <p><em>Loading...</em></p>
@@ -34,8 +35,5 @@ else
         </tbody>
     </table>
 }
-
-@functions {
-
-
 }
+

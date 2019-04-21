@@ -1,7 +1,7 @@
 ﻿using BlazorUIComponents.Core;
 using BlazorUIComponents.Core.Service;
 using BlazorUIComponents.Core.ViewModel;
-using Microsoft.AspNetCore.Components.Services;
+using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using System;
 using System.Collections.Generic;

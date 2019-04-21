@@ -4,7 +4,7 @@ using BlazorUIComponents.Controls;
 using BlazorUIComponents.Core;
 using BlazorUIComponents.Core.Service;
 using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Services;
+using Microsoft.AspNetCore.Components.RenderTree;
 using Microsoft.JSInterop;
 using Splat;
 using System;
@@ -25,8 +25,9 @@ namespace BlazorUIComponents.Demo.Components
 
         public NavPageBase() : base()
         {
-
+            
         }
+
 
         protected override Task OnInitAsync()
         {

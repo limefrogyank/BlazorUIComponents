@@ -23,7 +23,8 @@ namespace BlazorUIComponents.Demo
             services.AddMvc()
                 .AddNewtonsoftJson();
 
-            services.AddRazorComponents();
+            services.AddRazorPages();
+            services.AddServerSideBlazor();
 
             //services.AddSingleton<WeatherForecastService>();
 
@@ -46,10 +47,12 @@ namespace BlazorUIComponents.Demo
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
-            app.UseRouting(routes =>
+            app.UseRouting();
+
+            app.UseEndpoints(endpoints =>
             {
-                routes.MapRazorPages();
-                routes.MapComponentHub<App>("app");
+                endpoints.MapBlazorHub();
+                endpoints.MapFallbackToPage("/_Host");
             });
         }
     }

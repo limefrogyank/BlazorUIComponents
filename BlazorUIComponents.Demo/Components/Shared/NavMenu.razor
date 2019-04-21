@@ -1,5 +1,5 @@
 @inherits ReactiveBase
-@addTagHelper *, BlazorUIComponents.Controls
+@inject IComponentContext componentContext
 
 <div class="top-row pl-4 navbar navbar-dark">
     <a class="navbar-brand" href="">BlazorUIComponents.Demo</a>
@@ -8,9 +8,12 @@
     </button>
 </div>
 
+@if (Vm != null)
+{
 <div class="@NavMenuCssClass" onclick="@ToggleNavMenu">
     <ul class="nav flex-column nav-pills">
         <li class="nav-item px-3">
+            ***
             <ReactiveNavLink Classes="nav-link btn btn-outline-primary btn-block text-left"
                              Command="@Vm.NavLinkCommand"
                              CommandParameter="@Vm.ListViewDemoViewModel"
@@ -38,8 +41,10 @@
     </ul>
 
 </div>
+}
 
 @functions {
+    bool isInitialized = false;
     bool collapseNavMenu = true;
 
     string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
@@ -47,14 +52,6 @@
     MainViewModel Vm;
     INavigationService navigationService;
 
-    protected override Task OnInitAsync()
-    {
-        navigationService = Locator.Current.GetService<INavigationService>();
-        Vm = Locator.Current.GetService<MainViewModel>();
-        RegisterViewModel(Vm);
-
-        return base.OnInitAsync();
-    }
 
     async Task OnClickAsync(string href)
     {
@@ -70,7 +67,21 @@
                 await navigationService.NavigateToAsync(Vm.FetchDataViewModel);
                 break;
         }
+    }
 
+    protected override async Task OnAfterRenderAsync()
+    {
+        if (!isInitialized)
+        {
+            navigationService = Locator.Current.GetService<INavigationService>();
+            Vm = Locator.Current.GetService<MainViewModel>();
+            RegisterViewModel(Vm);
+            isInitialized = true;
+            await navigationService.NavigateToAsync(Locator.Current.GetServiceExt<ListViewDemoViewModel>());
+            //await Invoke(()=>StateHasChanged());
+            StateHasChanged();
+        }
+        await base.OnAfterRenderAsync();
     }
 
 

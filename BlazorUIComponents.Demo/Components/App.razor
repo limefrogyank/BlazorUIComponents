@@ -3,26 +3,28 @@
     directive matching the current URI.
 *@
 
-@inject HttpClient client;
+@inject HttpClient client
 @inject IJSRuntime JSRuntime
-@inject Microsoft.AspNetCore.Components.Services.IUriHelper UriHelper
+@inject IUriHelper UriHelper
+@inject IComponentContext componentContext
 
 @* This PreRenderCascade component lets us know when we're doing server-side prerendering so we can avoid logic that uses JSRuntime or Navigation (IUriHelper) that's for client only. *@
-    <PreRenderCascade>
+@*  <PreRenderCascade>*@
 
-        <EmbeddedContent BaseType="@(typeof(SingleInputModalView))" />
+@*<EmbeddedContent BaseType="@(typeof(SingleInputModalView))" />*@
 
-        <SingleInputModalView ref="singleInputModalView"></SingleInputModalView>
+<SingleInputModalView ref="singleInputModalView"></SingleInputModalView>
 
-        <Router AppAssembly="typeof(Startup).Assembly" />
+<Router AppAssembly="typeof(Startup).Assembly" />
 
-    </PreRenderCascade>
+@*</PreRenderCascade>*@
 
 @functions{
     private SingleInputModalView singleInputModalView;
     private DialogService dialogService;
 
-    protected override Task OnInitAsync()
+       
+    protected async override Task OnAfterRenderAsync()
     {
         Locator.CurrentMutable.RegisterConstant<IJSRuntime>(JSRuntime);
         Locator.CurrentMutable.RegisterConstant<IUriHelper>(UriHelper);
@@ -39,16 +41,9 @@
         Locator.CurrentMutable.RegisterConstant(new WeatherForecastService(), typeof(WeatherForecastService));
 
         dialogService = new DialogService();
+        dialogService.Register(singleInputModalView.ShowModalAsync);
         Locator.CurrentMutable.RegisterConstant(dialogService, typeof(IDialogService));
         Locator.CurrentMutable.RegisterConstant(new NavigationService(), typeof(INavigationService));
-
-
-        return base.OnInitAsync();
-    }
-
-    protected async override Task OnAfterRenderAsync()
-    {
-        dialogService.Register(singleInputModalView.ShowModalAsync);
 
         await base.OnAfterRenderAsync();
     }

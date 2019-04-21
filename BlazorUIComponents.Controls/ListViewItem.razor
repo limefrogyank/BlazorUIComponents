@@ -1,13 +1,17 @@
-﻿@inherits ComponentBase
+﻿@using Microsoft.AspNetCore.Components
+@using System.Collections.Specialized
+@using BlazorUIComponents.Controls
+
+@inherits ComponentBase
 @typeparam TItem;
 
-    <button type="button" class=@(Classes + (Model.Equals(ActiveItem) ? " active" : ""))
-            onclick=@(e=> OnItemClick(e))>
-        @ChildContent
-    </button>
+<button type="button" class=@(Classes + (Model.Equals(ActiveItem) ? " active" : ""))
+        onclick=@(e=> OnItemClick(e))>
+    @ChildContent
+</button>
 
 @functions{
-    
+
     [Parameter]
     private string Classes { get; set; }
 
@@ -26,16 +30,20 @@
     private RenderFragment ChildContent { get; set; }
 
     [Parameter]
-    private Func<UIMouseEventArgs,Task> ItemClicked { get; set; }
+    private Func<UIMouseEventArgs, Task> ItemClicked { get; set; }
 
     private Task OnItemClick(UIMouseEventArgs e)
     {
         if (Parent.SelectionMode == SelectionMode.None)
         {
             if (ItemClicked != null)
+            {
                 return ItemClicked.Invoke(e);
+            }
             else
+            {
                 return Task.CompletedTask;
+            }
         }
         else if (Parent.SelectionMode == SelectionMode.Single)
         {

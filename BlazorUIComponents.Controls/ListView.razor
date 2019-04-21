@@ -1,23 +1,29 @@
-﻿@using Microsoft.AspNetCore.Components;
-@using System.Collections.Specialized;
+﻿@using Microsoft.AspNetCore.Components
+@using System.Collections.Specialized
+@using BlazorUIComponents.Controls
 
-@inherits ComponentBase
 
 @typeparam TItem;
 
+@inherits ComponentBase
+
 <CascadingValue Value=this>
     <div class="list-group">
+        @if (ItemsSource != null)
+        {
         @for (var i = 0; i < ItemsSource.Count; i++)
         {
             var index = i;
             var item = ItemsSource.ElementAt(index);
             <ListViewItem Model=@item
+                          TItem="TItem"
                           Index=@index
                           ActiveItem=@SelectedItem
                           Classes=@(baseClasses)
-                          ItemClicked=@(e=> OnItemClick(e,item))>
+                          ItemClicked=@(e => OnItemClick(e, item))>
                 @ItemTemplate(item)
             </ListViewItem>
+        }
         }
     </div>
 </CascadingValue>
@@ -37,12 +43,16 @@
     private RenderFragment<TItem> ItemTemplate { get; set; }
 
     [Parameter]
-    public SelectionMode SelectionMode { get => selectionMode;
+    public SelectionMode SelectionMode
+    {
+        get => selectionMode;
         private set
         {
             selectionMode = value;
             if (selectionMode == SelectionMode.None)
+            {
                 SetSelectedItem(default(TItem));
+            }
         }
     }
 
@@ -57,8 +67,9 @@
     {
         SelectedItem = selectedItem;
         if (OnSelectedItemChanged != null)
+        {
             OnSelectedItemChanged.Invoke(SelectedItem);
-
+        }
         StateHasChanged();
     }
 
@@ -72,8 +83,9 @@
         if (notifyCollectionChanged != ItemsSource)
         {
             if (notifyCollectionChanged != null)
+            {
                 notifyCollectionChanged.CollectionChanged -= CollectionChanged;
-
+            }
             if (ItemsSource is INotifyCollectionChanged)
             {
                 notifyCollectionChanged = (INotifyCollectionChanged)ItemsSource;
@@ -90,7 +102,9 @@
         if (SelectionMode == SelectionMode.None)
         {
             if (ItemClicked != null)
+            {
                 return ItemClicked.Invoke(item);
+            }
         }
         else if (SelectionMode == SelectionMode.Single)
         {

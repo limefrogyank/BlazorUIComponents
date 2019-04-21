@@ -3,24 +3,32 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.0</TargetFramework>
     <LangVersion>7.3</LangVersion>
-    <_RazorComponentInclude>Components\**\*.cshtml</_RazorComponentInclude>
+    <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
+    <!--<_RazorComponentInclude>Components\**\*.cshtml</_RazorComponentInclude>-->
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="BlazorEmbedLibrary" Version="0.1.0-beta-4" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.Server" Version="3.0.0-preview3-19153-02" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.0.0-preview3-19153-02" />
-    <PackageReference Include="PreRenderComponent" Version="0.1.0-beta-1" />
+    <Content Remove="wwwroot\confirmationModalView.js" />
+    <Content Remove="wwwroot\singleInputModalView.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="wwwroot\confirmationModalView.js">
+      <LogicalName>blazor:js:%(RecursiveDir)%(Filename)%(Extension)</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="wwwroot\singleInputModalView.js">
+      <LogicalName>blazor:js:%(RecursiveDir)%(Filename)%(Extension)</LogicalName>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.0.0-preview4-19216-03" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\BlazorUIComponents.Controls\BlazorUIComponents.Controls.csproj" />
     <ProjectReference Include="..\BlazorUIComponents.Core\BlazorUIComponents.Core.csproj" />
     <ProjectReference Include="..\ReactiveUI\src\ReactiveUI\ReactiveUI.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="ViewModels\" />
   </ItemGroup>
 
 </Project>

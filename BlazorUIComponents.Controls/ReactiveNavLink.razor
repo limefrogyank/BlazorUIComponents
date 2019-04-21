@@ -1,15 +1,28 @@
 ﻿@using Microsoft.AspNetCore.Components;
-@using Microsoft.AspNetCore.Components.Forms
-@using Microsoft.AspNetCore.Components.Layouts
 @using Microsoft.AspNetCore.Components.Routing
-@using Microsoft.AspNetCore.Components.Services;
+@using ReactiveUI;
+@using System.Reactive.Linq;
 
+@inject IUriHelper UriHelper
 
-@inherits ReactiveButton
+@inherits ComponentBase
 
-@inject Microsoft.AspNetCore.Components.Services.IUriHelper UriHelper
+<button class=@(_classes + (isActive? " active" : "")) disabled=@isDisabled onclick=@ButtonClicked>
+    @ChildContent
+</button>
 
 @functions{
+    [Parameter]
+    protected string Classes { get; set; }
+
+    [Parameter]
+    private object Command { get; set; }
+
+    [Parameter]
+    private object CommandParameter { get; set; }
+
+    [Parameter]
+    private RenderFragment ChildContent { get; set; }
 
     [Parameter]
     NavLinkMatch Match { get; set; } = NavLinkMatch.Prefix;
@@ -17,11 +30,63 @@
     [Parameter]
     private string HRef { get; set; }
 
+    private IDisposable canExecuteSub;
+    private bool isDisabled = false;
+    protected bool isActive = false;
+    protected string _classes;
+
     protected override Task OnInitAsync()
     {
         UriHelper.OnLocationChanged += OnLocationChanged;
 
         return base.OnInitAsync();
+    }
+
+    public override Task SetParametersAsync(ParameterCollection parameters)
+    {
+        parameters.TryGetValue<string>("Classes", out _classes);
+        //            _classes = _baseClasses;
+
+        if (parameters.TryGetValue<object>("Command", out var command))
+        {
+            Type t = command.GetType();
+            if (t.IsGenericType)
+            {
+                if (t.GetGenericTypeDefinition() == typeof(ReactiveCommand<,>)) //check the object is our type
+                {
+                    var canExecuteObs = (IObservable<bool>)t.GetProperty("CanExecute").GetValue(command);
+
+                    if (canExecuteSub != null)
+                    {
+                        canExecuteSub.Dispose();
+                    }
+                    canExecuteSub = canExecuteObs.Subscribe(canExecute =>
+                    {
+                        isDisabled = !canExecute;
+                        Invoke(() => { StateHasChanged(); });
+                    });
+                }
+            }
+        }
+
+        return base.SetParametersAsync(parameters);
+    }
+
+    private Task ButtonClicked()
+    {
+        if (Command != null)
+        {
+            Type t = Command.GetType();
+            if (t.IsGenericType)
+            {
+                if (t.GetGenericTypeDefinition() == typeof(ReactiveCommand<,>)) //check the object is our type
+                {
+                    var method = t.GetMethod("Execute");
+                    ((IObservable<Task>)(method.Invoke(Command, new[] { CommandParameter }))).ObserveOn(RxApp.MainThreadScheduler).Subscribe();
+                }
+            }
+        }
+        return Task.CompletedTask;
     }
 
     private void OnLocationChanged(object sender, string newUriAbsolute)

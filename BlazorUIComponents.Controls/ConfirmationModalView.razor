@@ -5,7 +5,7 @@
 @using Microsoft.AspNetCore.Components.Forms
 @using Microsoft.AspNetCore.Components.Layouts
 @using Microsoft.AspNetCore.Components.Routing
-@using Microsoft.AspNetCore.Components.Services
+
 
 @inject IJSRuntime JSRuntime
 
@@ -35,11 +35,11 @@
 </div>
 
 @functions{
-    ElementRef modal;
-    string Title;
-    string Description;
+        ElementRef modal;
+        string Title;
+        string Description;
 
-    AsyncManualResetEvent<bool> asyncManualResetEvent = new AsyncManualResetEvent<bool>();
+        AsyncManualResetEvent<bool> asyncManualResetEvent = new AsyncManualResetEvent<bool>();
 
     protected override async Task OnAfterRenderAsync()
     {
@@ -82,7 +82,9 @@
         await JSRuntime.InvokeAsync<object>("confirmationModalView.showModal", modal);
 
         if (!asyncManualResetEvent.IsReset)
+        {
             asyncManualResetEvent.Reset();
+        }
 
         var result = await asyncManualResetEvent.WaitAsync();
 
