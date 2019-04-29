@@ -37,7 +37,7 @@ As you can see, properties are automatically updated on the view with a `StateHa
 
 Do not use `OnInitAsync()` for registering classes with Splat because you'll likely need `IJSRuntime` and that won't be ready until after rendering.  Use `OnAfterRenderAsync` instead for that.  But once you've got a reference to `IJSRuntime`, you can use the `OnInitAsync` method for everything else.
 
-** Soon to be removed... will be using regular version of ReactiveUI ** 
+#### Soon to be removed... will be using regular version of ReactiveUI ** 
 BTW, this included version of ReactiveUI is hacked and taken directly from here:
 https://github.com/Nethereum/ReactiveUI/tree/7ec6ef58dd469d90bce6ead32504630d15f03bc5
 Do NOT use it for UWP/Android/iOS/Xamarin.... it's only for Blazor that is technically dotnet framework, but still requires all of the UI stuff.
