@@ -14,7 +14,7 @@ http://blazoruicomponents.azurewebsites.net/
 4. Component libraries are somewhat broken.  Javascript files do NOT get included into your main Blazor app automatically.  For now, you must **copy** them to your wwwroot folder and reference them with script tags in the _\_Hosts.cshtml_ file
 
 # Dependencies
-1.  ReactiveUI - a hacked version that allows UI stuff in a plain .NET Standard project.  (Don't use it for regular platforms.)
+1.  ReactiveUI - (a hacked version is only required for client-side Blazor, which doesn't work well with ReactiveUI anyways)
 2.  DotNetCore v3.0.0-preview4  (required for Blazor)
 3.  Bootstrap 4 javascript files - required to make the Dialog stuff work... 
 
