@@ -5,7 +5,7 @@ Blazor client-side using WASM will NOT work with ReactiveUI due to Mono's port f
 
 # Working Web Demo
 
-http://blazoruicomponents.azurewebsites.net/
+https://blazoruicomponents.azurewebsites.net/
 
 # Things to consider
 1. Navigation is half-finished.  Refreshes and direct links will not work.  They just make the app go back to the first page (or crash in my live demo).  But everything else works.  
