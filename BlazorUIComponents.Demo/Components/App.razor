@@ -14,37 +14,37 @@
 @*<EmbeddedContent BaseType="@(typeof(SingleInputModalView))" />*@
 
 <SingleInputModalView ref="singleInputModalView"></SingleInputModalView>
+<BootstrapperView>
+    <Router AppAssembly="typeof(Startup).Assembly" />
+</BootstrapperView>
+    @*</PreRenderCascade>*@
 
-<Router AppAssembly="typeof(Startup).Assembly" />
-
-@*</PreRenderCascade>*@
-
-@functions{
-    private SingleInputModalView singleInputModalView;
-    private DialogService dialogService;
-
-       
-    protected async override Task OnAfterRenderAsync()
-    {
-        Locator.CurrentMutable.RegisterConstant<IJSRuntime>(JSRuntime);
-        Locator.CurrentMutable.RegisterConstant<IUriHelper>(UriHelper);
-        Locator.CurrentMutable.RegisterConstant<HttpClient>(client);
+    @functions{
+        private SingleInputModalView singleInputModalView;
+        private DialogService dialogService;
 
 
-        Locator.CurrentMutable.Register<MainViewModel>();
-        Locator.CurrentMutable.Register<ListViewDemoViewModel>();
-        Locator.CurrentMutable.Register<CounterViewModel>();
-        Locator.CurrentMutable.Register<FetchDataViewModel>();
+        protected async override Task OnAfterRenderAsync()
+        {
+            Locator.CurrentMutable.RegisterConstant<IJSRuntime>(JSRuntime);
+            Locator.CurrentMutable.RegisterConstant<IUriHelper>(UriHelper);
+            Locator.CurrentMutable.RegisterConstant<HttpClient>(client);
 
 
-        //Locator.CurrentMutable.RegisterConstant(new DataService(), typeof(IDataService));
-        Locator.CurrentMutable.RegisterConstant(new WeatherForecastService(), typeof(WeatherForecastService));
+            Locator.CurrentMutable.Register<MainViewModel>();
+            Locator.CurrentMutable.Register<ListViewDemoViewModel>();
+            Locator.CurrentMutable.Register<CounterViewModel>();
+            Locator.CurrentMutable.Register<FetchDataViewModel>();
 
-        dialogService = new DialogService();
-        dialogService.Register(singleInputModalView.ShowModalAsync);
-        Locator.CurrentMutable.RegisterConstant(dialogService, typeof(IDialogService));
-        Locator.CurrentMutable.RegisterConstant(new NavigationService(), typeof(INavigationService));
 
-        await base.OnAfterRenderAsync();
+            //Locator.CurrentMutable.RegisterConstant(new DataService(), typeof(IDataService));
+            Locator.CurrentMutable.RegisterConstant(new WeatherForecastService(), typeof(WeatherForecastService));
+
+            dialogService = new DialogService();
+            dialogService.Register(singleInputModalView.ShowModalAsync);
+            Locator.CurrentMutable.RegisterConstant(dialogService, typeof(IDialogService));
+            Locator.CurrentMutable.RegisterConstant(new NavigationService(), typeof(INavigationService));
+
+            await base.OnAfterRenderAsync();
+        }
     }
-}

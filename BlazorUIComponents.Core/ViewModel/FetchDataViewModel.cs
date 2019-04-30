@@ -3,6 +3,7 @@ using BlazorUIComponents.Core.Service;
 using DynamicData;
 using DynamicData.Binding;
 using ReactiveUI;
+using Splat;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -17,9 +18,9 @@ namespace BlazorUIComponents.Core.ViewModel
 
         public IObservableCollection<WeatherForecast> WeatherForecastItems { get; private set; } = new ObservableCollectionExtended<WeatherForecast>();
 
-        public FetchDataViewModel(WeatherForecastService weatherForecastService) : base("Fetch Data")
+        public FetchDataViewModel() : base("Fetch Data")
         {
-            this.weatherForecastService = weatherForecastService;
+            this.weatherForecastService = Locator.Current.GetService<WeatherForecastService>();
 
             forecastList.Connect().Bind(WeatherForecastItems).Subscribe();
 

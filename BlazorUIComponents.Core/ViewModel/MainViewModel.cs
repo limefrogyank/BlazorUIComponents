@@ -1,5 +1,6 @@
 ﻿using BlazorUIComponents.Core.Service;
 using ReactiveUI;
+using Splat;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,9 +38,9 @@ namespace BlazorUIComponents.Core.ViewModel
 
         public ReactiveCommand<object, Task> NavLinkCommand { get; }
 
-        public MainViewModel(INavigationService navigationService) : base("Main")
+        public MainViewModel() : base("Main")
         {
-            this.navigationService = navigationService;
+            this.navigationService = Locator.Current.GetServiceExt<INavigationService>();
 
             ListViewDemoViewModel = Splat.Locator.Current.GetServiceExt<ListViewDemoViewModel>();
             CounterViewModel = Splat.Locator.Current.GetServiceExt<CounterViewModel>();

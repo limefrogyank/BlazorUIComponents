@@ -4,6 +4,7 @@ using BlazorUIComponents.Core.ViewModel.ListViewDemo;
 using DynamicData;
 using DynamicData.Binding;
 using ReactiveUI;
+using Splat;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -30,10 +31,10 @@ namespace BlazorUIComponents.Core.ViewModel
 
         
 
-        public ListViewDemoViewModel(IDialogService dialogService, WeatherForecastService weatherForecastService) : base("ListView")
+        public ListViewDemoViewModel() : base("ListView")
         {
-            this.dialogService = dialogService;
-            this.weatherForecastService = weatherForecastService;
+            this.dialogService = Locator.Current.GetService<IDialogService>();
+            this.weatherForecastService = Locator.Current.GetService<WeatherForecastService>();
 
             sampleItemCache.Connect()
                 .Transform(item => new SampleItemViewModel(item))

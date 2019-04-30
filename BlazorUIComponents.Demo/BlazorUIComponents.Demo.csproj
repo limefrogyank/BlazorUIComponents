@@ -8,27 +8,24 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Remove="wwwroot\confirmationModalView.js" />
-    <Content Remove="wwwroot\singleInputModalView.js" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Include="wwwroot\confirmationModalView.js">
-      <LogicalName>blazor:js:%(RecursiveDir)%(Filename)%(Extension)</LogicalName>
-    </EmbeddedResource>
-    <EmbeddedResource Include="wwwroot\singleInputModalView.js">
-      <LogicalName>blazor:js:%(RecursiveDir)%(Filename)%(Extension)</LogicalName>
-    </EmbeddedResource>
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.0.0-preview4-19216-03" />
+    <PackageReference Include="ReactiveUI" Version="9.13.1" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\BlazorUIComponents.Controls\BlazorUIComponents.Controls.csproj" />
     <ProjectReference Include="..\BlazorUIComponents.Core\BlazorUIComponents.Core.csproj" />
-    <ProjectReference Include="..\ReactiveUI\src\ReactiveUI\ReactiveUI.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="wwwroot\confirmationModalView.js">
+      <LogicalName>blazor:js:%(RecursiveDir)%(Filename)%(Extension)</LogicalName>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\singleInputModalView.js">
+      <LogicalName>blazor:js:%(RecursiveDir)%(Filename)%(Extension)</LogicalName>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
 </Project>

@@ -1,0 +1,52 @@
+﻿@inherits ComponentBase
+
+@inject HttpClient client
+@inject IJSRuntime jsRuntime
+@inject IUriHelper uriHelper
+
+<SingleInputModalView ref="singleInputModalView"></SingleInputModalView>
+
+@ChildContent
+
+@functions{
+
+    [Parameter]
+    private RenderFragment ChildContent { get; set; }
+
+    bool isInitialized = false;
+
+    SingleInputModalView singleInputModalView;
+    ConfirmationModalView confirmationModalView;
+    DialogService dialogService;
+       
+
+    protected async override Task OnAfterRenderAsync()
+    {
+        if (!isInitialized)
+        {
+             Locator.CurrentMutable.RegisterConstant<IJSRuntime>(jsRuntime);
+            Locator.CurrentMutable.RegisterConstant<IUriHelper>(uriHelper);
+            Locator.CurrentMutable.RegisterConstant<HttpClient>(client);
+
+
+            Locator.CurrentMutable.Register<MainViewModel>();
+            Locator.CurrentMutable.Register<ListViewDemoViewModel>();
+            Locator.CurrentMutable.Register<CounterViewModel>();
+            Locator.CurrentMutable.Register<FetchDataViewModel>();
+
+
+            //Locator.CurrentMutable.RegisterConstant(new DataService(), typeof(IDataService));
+            Locator.CurrentMutable.RegisterConstant(new WeatherForecastService(), typeof(WeatherForecastService));
+
+            dialogService = new DialogService();
+            dialogService.Register(singleInputModalView.ShowModalAsync);
+            Locator.CurrentMutable.RegisterConstant(dialogService, typeof(IDialogService));
+            Locator.CurrentMutable.RegisterConstant(new NavigationService(), typeof(INavigationService));
+
+            await base.OnAfterRenderAsync();
+            isInitialized = true;
+        }
+
+        await base.OnAfterRenderAsync();
+    }
+}
