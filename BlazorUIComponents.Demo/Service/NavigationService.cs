@@ -27,7 +27,8 @@ namespace BlazorUIComponents.Demo.Service
             { typeof(FetchDataViewModel), (vm) => $"fetchdata" },
             { typeof(CounterViewModel), (vm) => $"counter" },
             { typeof(ListViewDemoViewModel), (vm) => $"listview" },
-            { typeof(GroupedListViewDemoViewModel), (vm) => $"groupedlistview" }
+            { typeof(GroupedListViewDemoViewModel), (vm) => $"groupedlistview" },
+            { typeof(CommandBarDemoViewModel), (vm) => $"commandbar" }
         };
 
         string GeneratePath(object vm)

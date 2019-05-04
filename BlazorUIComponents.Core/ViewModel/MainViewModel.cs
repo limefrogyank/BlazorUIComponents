@@ -33,6 +33,7 @@ namespace BlazorUIComponents.Core.ViewModel
 
         public ListViewDemoViewModel ListViewDemoViewModel { get; }
         public GroupedListViewDemoViewModel GroupedListViewDemoViewModel { get; }
+        public CommandBarDemoViewModel CommandBarDemoViewModel { get; }
         public CounterViewModel CounterViewModel { get; }
         public FetchDataViewModel FetchDataViewModel { get; }
 
@@ -45,6 +46,7 @@ namespace BlazorUIComponents.Core.ViewModel
 
             ListViewDemoViewModel = Splat.Locator.Current.GetServiceExt<ListViewDemoViewModel>();
             GroupedListViewDemoViewModel = Splat.Locator.Current.GetServiceExt<GroupedListViewDemoViewModel>();
+            CommandBarDemoViewModel = Splat.Locator.Current.GetService<CommandBarDemoViewModel>();
             CounterViewModel = Splat.Locator.Current.GetServiceExt<CounterViewModel>();
             FetchDataViewModel = Splat.Locator.Current.GetServiceExt<FetchDataViewModel>();
    

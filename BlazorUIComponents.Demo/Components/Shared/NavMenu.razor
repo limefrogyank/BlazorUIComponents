@@ -32,6 +32,13 @@
         </ReactiveNavLink>
         <ReactiveNavLink Classes="link item"
                          Command="@Vm.NavLinkCommand"
+                         CommandParameter="@Vm.CommandBarDemoViewModel"
+                         Match="NavLinkMatch.All"
+                         HRef="commandbar">
+            <i class="ellipsis horizontal icon"></i> CommandBar
+        </ReactiveNavLink>
+        <ReactiveNavLink Classes="link item"
+                         Command="@Vm.NavLinkCommand"
                          CommandParameter="@Vm.CounterViewModel"
                          HRef="counter">
             <i class="plus icon"></i> Check In
@@ -58,24 +65,24 @@
     INavigationService navigationService;
 
 
-    async Task OnClickAsync(string href)
-    {
-        switch (href)
-        {
-            case "listview":
-                await navigationService.NavigateToAsync(Vm.ListViewDemoViewModel);
-                break;
-            case "groupedlistview":
-                await navigationService.NavigateToAsync(Vm.GroupedListViewDemoViewModel);
-                break;
-            case "checkin":
-                await navigationService.NavigateToAsync(Vm.CounterViewModel);
-                break;
-            default:
-                await navigationService.NavigateToAsync(Vm.FetchDataViewModel);
-                break;
-        }
-    }
+    //async Task OnClickAsync(string href)
+    //{
+    //    switch (href)
+    //    {
+    //        case "listview":
+    //            await navigationService.NavigateToAsync(Vm.ListViewDemoViewModel);
+    //            break;
+    //        case "groupedlistview":
+    //            await navigationService.NavigateToAsync(Vm.GroupedListViewDemoViewModel);
+    //            break;
+    //        case "checkin":
+    //            await navigationService.NavigateToAsync(Vm.CounterViewModel);
+    //            break;
+    //        default:
+    //            await navigationService.NavigateToAsync(Vm.FetchDataViewModel);
+    //            break;
+    //    }
+    //}
 
     protected override async Task OnAfterRenderAsync()
     {

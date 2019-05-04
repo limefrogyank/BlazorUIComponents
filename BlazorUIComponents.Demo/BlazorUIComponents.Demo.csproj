@@ -41,6 +41,12 @@
     <ProjectReference Include="..\BlazorUIComponents.Core\BlazorUIComponents.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Update="wwwroot\dropdown.js">
+      <LogicalName>blazor:js:%(RecursiveDir)%(Filename)%(Extension)</LogicalName>
+    </Content>
+  </ItemGroup>
+
   <!--<ItemGroup>
     <Content Update="wwwroot\confirmationModalViewSemantic.js">
       <LogicalName>blazor:js:%(RecursiveDir)%(Filename)%(Extension)</LogicalName>

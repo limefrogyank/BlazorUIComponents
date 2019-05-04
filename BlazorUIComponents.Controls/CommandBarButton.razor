@@ -1,0 +1,33 @@
+﻿@using Microsoft.AspNetCore.Components
+@using Microsoft.JSInterop
+@using System.Collections.Specialized
+@using BlazorUIComponents.Controls
+@using System.Windows.Input
+
+@inherits ComponentBase
+
+@inject IJSRuntime JSRuntime
+
+    <div class="item link" onclick="@OnClick">
+        <i class="@IconClass icon"></i>
+        @Label
+    </div>
+
+@functions{
+    [Parameter] string IconClass { get; set; }
+
+    [Parameter] string Label { get; set; }
+
+    [Parameter] ICommand Command { get; set; }
+
+    [Parameter] object CommandParameter { get; set; }
+
+    private Task OnClick(UIMouseEventArgs args)
+    {
+        if (Command != null)
+        {
+            Command.Execute(CommandParameter);
+        }
+        return Task.CompletedTask;
+    }
+}

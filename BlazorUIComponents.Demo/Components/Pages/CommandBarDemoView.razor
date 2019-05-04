@@ -1,0 +1,46 @@
+﻿@page "/commandbar"
+
+@inherits NavPageBase<CommandBarDemoViewModel>
+
+
+<h1>CommandBar</h1>
+@if (Vm != null)
+{
+
+
+    <BlazorUIComponents.Controls.CommandBar UseRoundedCorners="false">
+        <ChildContent>
+
+            <CommandBarButton Label="Games"
+                              IconClass="gamepad"
+                              Command=@Vm.AnyCommand
+                              CommandParameter="@("games clicked")" />
+            <CommandBarButton Label="Channels"
+                              IconClass="video camera"
+                              Command=@Vm.AnyCommand
+                              CommandParameter="@("channels clicked")" />
+            <CommandBarButton Label="Videos"
+                              IconClass="video play"
+                              Command=@Vm.AnyCommand
+                              CommandParameter="@("videos clicked")" />
+        </ChildContent>
+        <SecondaryMenu>
+            <CommandBarButton Label="Edit Profile"
+                              IconClass="edit"
+                              Command=@Vm.AnyCommand
+                              CommandParameter="@("edit profile clicked")" />
+            <CommandBarButton Label="Choose Language"
+                              IconClass="globe"
+                              Command=@Vm.AnyCommand
+                              CommandParameter="@("choose language clicked")" />
+            <CommandBarButton Label="Account Settings"
+                              IconClass="settings"
+                              Command=@Vm.AnyCommand
+                              CommandParameter="@("account settings clicked")" />
+        </SecondaryMenu>
+        
+    </BlazorUIComponents.Controls.CommandBar>
+
+    <br/><br/>
+    <h2>@Vm.Message</h2>
+}
