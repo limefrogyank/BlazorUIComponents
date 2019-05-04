@@ -1,6 +1,8 @@
-﻿window.singleInputModalView = {
+﻿window.singleInputModalViewSemantic = {
 
     initialize: function (element, pageRef) {
+
+        $(element).modal();
 
         $(element).on('hide.bs.modal', function (e) {
             pageRef.invokeMethodAsync('NotifySingleInputModalViewHidden');

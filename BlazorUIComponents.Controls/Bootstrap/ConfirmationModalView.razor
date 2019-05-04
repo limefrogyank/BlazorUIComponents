@@ -43,12 +43,12 @@
 
     protected override async Task OnAfterRenderAsync()
     {
-        await JSRuntime.InvokeAsync<object>("confirmationModalView.initialize", modal, new DotNetObjectRef(this));
+        await JSRuntime.InvokeAsync<object>("confirmationModalViewBS.initialize", modal, new DotNetObjectRef(this));
         await base.OnAfterRenderAsync();
     }
 
     [JSInvokable]
-    public void NotifyConfirmationModalViewHidden()
+    public void NotifyConfirmationModalViewHiddenBS()
     {
         if (asyncManualResetEvent.IsReset)
         {
@@ -60,7 +60,7 @@
     async Task OnSubmitClicked(UIMouseEventArgs e)
     {
         asyncManualResetEvent.Set(true);
-        await JSRuntime.InvokeAsync<object>("confirmationModalView.hideModal", modal);
+        await JSRuntime.InvokeAsync<object>("confirmationModalViewBS.hideModal", modal);
     }
 
     async Task OnKeyPressed(UIKeyboardEventArgs e)
@@ -79,7 +79,7 @@
         this.Title = title;
         this.Description = description;
         StateHasChanged();
-        await JSRuntime.InvokeAsync<object>("confirmationModalView.showModal", modal);
+        await JSRuntime.InvokeAsync<object>("confirmationModalViewBS.showModal", modal);
 
         if (!asyncManualResetEvent.IsReset)
         {

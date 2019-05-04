@@ -7,9 +7,9 @@
 
 @inherits ComponentBase
 
-<div class=@(_classes + (isActive? " active" : "")) disabled=@isDisabled onclick=@ButtonClicked>
+<button class=@(_classes + (isActive? " active" : "")) disabled=@isDisabled onclick=@ButtonClicked>
     @ChildContent
-</div>
+</button>
 
 @functions{
     [Parameter]

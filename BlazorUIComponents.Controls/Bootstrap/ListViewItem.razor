@@ -5,9 +5,10 @@
 @inherits ComponentBase
 @typeparam TItem;
 
-    <div class=@(Classes + (Model.Equals(ActiveItem) ? " active" : "")) onclick="@(e=>OnItemClick(e))">
-        @ChildContent
-    </div>
+<button type="button" class=@(Classes + (Model.Equals(ActiveItem) ? " active" : ""))
+        onclick=@(e=> OnItemClick(e))>
+    @ChildContent
+</button>
 
 @functions{
 

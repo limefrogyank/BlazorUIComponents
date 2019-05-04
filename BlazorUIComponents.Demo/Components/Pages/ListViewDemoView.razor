@@ -6,10 +6,10 @@
 
 <h1>ListView Demo</h1>
 
-<div class="custom-control custom-switch">
-    <input type="checkbox" class="custom-control-input" id="customSwitch1" bind="@isChecked" />
-    <label class="custom-control-label" for="customSwitch1">@(isChecked ? SelectionMode.Single : SelectionMode.None)</label>
 
+<div class="ui toggle checkbox">
+    <input type="checkbox" id="customSwitch1" bind="@isChecked" />
+    <label for="customSwitch1">@(isChecked ? SelectionMode.Single : SelectionMode.None)</label>
 </div>
 
 @if (isChecked)
@@ -17,8 +17,8 @@
     <div>Selected Item:  @Vm?.SelectedItem?.DisplayName</div>
 @*There's a brief time period when isChecked is true and Vm.SelectedItem is still null... use null checking '?'*@
 }
-
-<ReactiveButton Classes="btn btn-primary" Command="@Vm?.AddSampleItemCommand">Add Item</ReactiveButton>
+<p></p>
+<ReactiveButton Classes="ui button" Command="@Vm?.AddSampleItemCommand">Add Item</ReactiveButton>
 
 @*BUG-Must use fully qualified component tags to get the inner RenderFragments working (i.e. ItemTemplate)*@
 @if (Vm != null)
@@ -30,8 +30,14 @@
           ItemClicked=@OnItemClicked
           >    
     <ItemTemplate Context="listitem">
-        <h4>@listitem.DisplayName</h4>
-        <h5>@listitem.Date</h5>
+        <div class="ui header">
+            <div class="content">
+                @listitem.DisplayName 
+                <div class="sub header">@listitem.Date</div>
+            </div>
+           
+        </div>
+    
     </ItemTemplate>
 </BlazorUIComponents.Controls.ListView>
 }

@@ -8,7 +8,7 @@
 @inherits ComponentBase
 
 <CascadingValue Value=this>
-    <div class="ui middle aligned big divided selection list">
+    <div class="list-group">
         @if (ItemsSource != null)
         {
         @for (var i = 0; i < ItemsSource.Count; i++)
@@ -30,7 +30,7 @@
 
 @functions{
     private INotifyCollectionChanged notifyCollectionChanged;
-    private const string baseClasses = "item";
+    private const string baseClasses = "list-group-item list-group-item-action";
     private SelectionMode selectionMode = SelectionMode.None;
 
     [Parameter]

@@ -1,5 +1,6 @@
 ﻿@using Microsoft.AspNetCore.Components
 @using Microsoft.JSInterop
+@using BlazorUIComponents.Controls
 
 @inject IJSRuntime JSRuntime
 
@@ -33,11 +34,11 @@
 </div>
 
 @functions{
-        ElementRef modal;
-        string Title;
-        string Description;
-        string InputHeader;
-        string InputValue;
+    ElementRef modal;
+    string Title;
+    string Description;
+    string InputHeader;
+    string InputValue;
 
     [Parameter]
     string HackParameter { get; set; }
@@ -46,12 +47,12 @@
 
     protected override async Task OnAfterRenderAsync()
     {
-        await JSRuntime.InvokeAsync<object>("singleInputModalView.initialize", modal, new DotNetObjectRef(this));
+        await JSRuntime.InvokeAsync<object>("singleInputModalViewBS.initialize", modal, new DotNetObjectRef(this));
         await base.OnAfterRenderAsync();
     }
 
     [JSInvokable]
-    public void NotifySingleInputModalViewHidden()
+    public void NotifySingleInputModalViewHiddenBS()
     {
         if (asyncManualResetEvent.IsReset)
         {
@@ -63,7 +64,7 @@
     async Task OnSubmitClicked(UIMouseEventArgs e)
     {
         asyncManualResetEvent.Set(InputValue);
-        await JSRuntime.InvokeAsync<object>("singleInputModalView.hideModal", modal);
+        await JSRuntime.InvokeAsync<object>("singleInputModalViewBS.hideModal", modal);
     }
 
     async Task OnKeyPressed(UIKeyboardEventArgs e)
@@ -72,7 +73,7 @@
         {
             //complete and return result;
             asyncManualResetEvent.Set(InputValue);
-            await JSRuntime.InvokeAsync<object>("singleInputModalView.hideModal", modal);
+            await JSRuntime.InvokeAsync<object>("singleInputModalViewBS.hideModal", modal);
         }
         //return Task.CompletedTask;
     }
@@ -83,7 +84,7 @@
         this.Description = description;
         this.InputHeader = inputHeader;
         StateHasChanged();
-        await JSRuntime.InvokeAsync<object>("singleInputModalView.showModal", modal);
+        await JSRuntime.InvokeAsync<object>("singleInputModalViewBS.showModal", modal);
 
         if (!asyncManualResetEvent.IsReset)
         {

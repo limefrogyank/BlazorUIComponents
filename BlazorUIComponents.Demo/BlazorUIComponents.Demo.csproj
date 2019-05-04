@@ -8,6 +8,31 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\confirmationModalViewSemantic.js" />
+    <Content Remove="wwwroot\singleInputModalViewSemantic.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="wwwroot\confirmationModalViewSemantic.js">
+      <LogicalName>blazor:js:%(RecursiveDir)%(Filename)%(Extension)</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="wwwroot\singleInputModalViewSemantic.js">
+      <LogicalName>blazor:js:%(RecursiveDir)%(Filename)%(Extension)</LogicalName>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\semantic\semantic.js" />
+    <None Include="wwwroot\semantic\semantic.min.js" />
+    <None Include="wwwroot\semantic\themes\default\assets\fonts\brand-icons.svg" />
+    <None Include="wwwroot\semantic\themes\default\assets\fonts\brand-icons.woff2" />
+    <None Include="wwwroot\semantic\themes\default\assets\fonts\icons.svg" />
+    <None Include="wwwroot\semantic\themes\default\assets\fonts\icons.woff2" />
+    <None Include="wwwroot\semantic\themes\default\assets\fonts\outline-icons.svg" />
+    <None Include="wwwroot\semantic\themes\default\assets\fonts\outline-icons.woff2" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.0.0-preview4-19216-03" />
     <PackageReference Include="ReactiveUI" Version="9.13.1" />
   </ItemGroup>
@@ -15,17 +40,6 @@
   <ItemGroup>
     <ProjectReference Include="..\BlazorUIComponents.Controls\BlazorUIComponents.Controls.csproj" />
     <ProjectReference Include="..\BlazorUIComponents.Core\BlazorUIComponents.Core.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Update="wwwroot\confirmationModalView.js">
-      <LogicalName>blazor:js:%(RecursiveDir)%(Filename)%(Extension)</LogicalName>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Update="wwwroot\singleInputModalView.js">
-      <LogicalName>blazor:js:%(RecursiveDir)%(Filename)%(Extension)</LogicalName>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
 
 </Project>
