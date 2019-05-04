@@ -12,6 +12,7 @@ namespace BlazorUIComponents.Core.ViewModel.ListViewDemo
 
         public string Id => sampleItem.Id;
         public string Date => sampleItem.DateAdded.ToLocalTime().ToString("T");
+        public string Category => sampleItem.Category;
         public string DisplayName => sampleItem.DisplayName;
 
         public SampleItemViewModel(SampleItem sampleItem)

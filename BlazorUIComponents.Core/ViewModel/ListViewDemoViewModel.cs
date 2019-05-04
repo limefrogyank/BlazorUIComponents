@@ -20,11 +20,11 @@ namespace BlazorUIComponents.Core.ViewModel
         private readonly WeatherForecastService weatherForecastService;
 
         private SourceCache<SampleItem, string> sampleItemCache = new SourceCache<SampleItem, string>(x=>x.Id);
-        private SampleItemViewModel selectedItem;
+        private object selectedItem;
 
         public IObservableCollection<SampleItemViewModel> SampleItemViewModels { get; private set; } = new ObservableCollectionExtended<SampleItemViewModel>();
 
-        public SampleItemViewModel SelectedItem { get => selectedItem; set => this.RaiseAndSetIfChanged(ref selectedItem, value); }
+        public object SelectedItem { get => selectedItem; set => this.RaiseAndSetIfChanged(ref selectedItem, value); }
 
         public ReactiveCommand<Unit, Task> AddSampleItemCommand { get; }
         public ReactiveCommand<SampleItemViewModel, Task> SampleItemClickCommand { get; }

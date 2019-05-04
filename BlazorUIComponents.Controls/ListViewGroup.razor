@@ -4,22 +4,31 @@
 
 @inherits ComponentBase
 
-    <div class=@(Classes + (Model.Equals(ActiveItem) ? " active" : "")) onclick="@(e=>OnItemClick(e))">
-        @ChildContent
-    </div>
+<div class="content">
+    <h2 class="ui block header" onclick="@(e=>OnItemClick(e))">
+        @DisplayName
+    </h2>
+    @*<div class="content">*@
+
+    @*</div>*@
+</div>
+@ChildContent
 
 @functions{
 
     [Parameter]
     private string Classes { get; set; }
 
+    [Parameter]
+    private string DisplayName { get; set; }
+
     [CascadingParameter] ListView Parent { get; set; }
 
     [Parameter]
     private object Model { get; set; }
 
-    [Parameter]
-    private object ActiveItem { get; set; }
+    //[Parameter]
+    //private TItem ActiveItem { get; set; }
 
     [Parameter]
     public int Index { get; private set; }
@@ -45,7 +54,7 @@
         }
         else if (Parent.SelectionMode == SelectionMode.Single)
         {
-            Parent.SetSelectedItem(this.Model);
+            //Parent.SetSelectedItem(this.Model);
         }
         return Task.CompletedTask;
     }

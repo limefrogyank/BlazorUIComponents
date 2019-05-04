@@ -15,13 +15,20 @@
 {
 <div class="@NavMenuCssClass" onclick="@ToggleNavMenu">
     <div class="ui fluid massive vertical menu">
-        
+
         <ReactiveNavLink Classes="link item"
                          Command="@Vm.NavLinkCommand"
                          CommandParameter="@Vm.ListViewDemoViewModel"
-                         Match="NavLinkMatch.Prefix"
+                         Match="NavLinkMatch.All"
                          HRef="listview">
-            <i class="home icon"></i> ListView
+            <i class="list icon"></i> ListView
+        </ReactiveNavLink>
+        <ReactiveNavLink Classes="link item"
+                         Command="@Vm.NavLinkCommand"
+                         CommandParameter="@Vm.GroupedListViewDemoViewModel"
+                         Match="NavLinkMatch.All"
+                         HRef="groupedlistview">
+            <i class="list ol icon"></i> Grouped ListView
         </ReactiveNavLink>
         <ReactiveNavLink Classes="link item"
                          Command="@Vm.NavLinkCommand"
@@ -34,7 +41,7 @@
                          CommandParameter="@Vm.FetchDataViewModel"
                          HRef="fetchdata">
             <i class="search icon"></i> Fetch data
-</ReactiveNavLink>
+        </ReactiveNavLink>
     </div>
     
  
@@ -57,6 +64,9 @@
         {
             case "listview":
                 await navigationService.NavigateToAsync(Vm.ListViewDemoViewModel);
+                break;
+            case "groupedlistview":
+                await navigationService.NavigateToAsync(Vm.GroupedListViewDemoViewModel);
                 break;
             case "checkin":
                 await navigationService.NavigateToAsync(Vm.CounterViewModel);

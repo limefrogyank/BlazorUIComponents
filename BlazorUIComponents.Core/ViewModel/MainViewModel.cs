@@ -32,6 +32,7 @@ namespace BlazorUIComponents.Core.ViewModel
         public bool IsEnabled => isEnabled.Value;
 
         public ListViewDemoViewModel ListViewDemoViewModel { get; }
+        public GroupedListViewDemoViewModel GroupedListViewDemoViewModel { get; }
         public CounterViewModel CounterViewModel { get; }
         public FetchDataViewModel FetchDataViewModel { get; }
 
@@ -43,8 +44,10 @@ namespace BlazorUIComponents.Core.ViewModel
             this.navigationService = Locator.Current.GetServiceExt<INavigationService>();
 
             ListViewDemoViewModel = Splat.Locator.Current.GetServiceExt<ListViewDemoViewModel>();
+            GroupedListViewDemoViewModel = Splat.Locator.Current.GetServiceExt<GroupedListViewDemoViewModel>();
             CounterViewModel = Splat.Locator.Current.GetServiceExt<CounterViewModel>();
             FetchDataViewModel = Splat.Locator.Current.GetServiceExt<FetchDataViewModel>();
+   
 
             //this.WhenAnyObservable(x => x.authService.IsLoggedIn).ObserveOn(RxApp.MainThreadScheduler).ToProperty(this, x => x.IsEnabled, out isEnabled);
 

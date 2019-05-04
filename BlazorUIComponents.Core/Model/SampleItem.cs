@@ -9,5 +9,6 @@ namespace BlazorUIComponents.Core.Model
         public string Id { get; set; }
         public DateTimeOffset DateAdded { get; set; }
         public string DisplayName { get; set; }
+        public string Category { get; set; }
     }
 }

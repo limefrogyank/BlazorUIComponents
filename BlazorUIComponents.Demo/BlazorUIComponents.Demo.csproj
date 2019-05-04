@@ -8,14 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Remove="wwwroot\confirmationModalViewSemantic.js" />
     <Content Remove="wwwroot\singleInputModalViewSemantic.js" />
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="wwwroot\confirmationModalViewSemantic.js">
-      <LogicalName>blazor:js:%(RecursiveDir)%(Filename)%(Extension)</LogicalName>
-    </EmbeddedResource>
     <EmbeddedResource Include="wwwroot\singleInputModalViewSemantic.js">
       <LogicalName>blazor:js:%(RecursiveDir)%(Filename)%(Extension)</LogicalName>
     </EmbeddedResource>
@@ -30,6 +26,9 @@
     <None Include="wwwroot\semantic\themes\default\assets\fonts\icons.woff2" />
     <None Include="wwwroot\semantic\themes\default\assets\fonts\outline-icons.svg" />
     <None Include="wwwroot\semantic\themes\default\assets\fonts\outline-icons.woff2" />
+
+    <!--<None Include="wwwroot\confirmationModalViewSemantic.js" />
+    <None Include="wwwroot\singleInputModalViewSemantic.js" />-->
   </ItemGroup>
 
   <ItemGroup>
@@ -41,5 +40,14 @@
     <ProjectReference Include="..\BlazorUIComponents.Controls\BlazorUIComponents.Controls.csproj" />
     <ProjectReference Include="..\BlazorUIComponents.Core\BlazorUIComponents.Core.csproj" />
   </ItemGroup>
+
+  <!--<ItemGroup>
+    <Content Update="wwwroot\confirmationModalViewSemantic.js">
+      <LogicalName>blazor:js:%(RecursiveDir)%(Filename)%(Extension)</LogicalName>
+    </Content>
+    <Content Update="wwwroot\singleInputModalViewSemantic.js">
+      <LogicalName>blazor:js:%(RecursiveDir)%(Filename)%(Extension)</LogicalName>
+    </Content>
+  </ItemGroup>-->
 
 </Project>

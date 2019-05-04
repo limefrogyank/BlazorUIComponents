@@ -2,11 +2,12 @@
 
     initialize: function (element, pageRef) {
 
-        $(element).modal();
+        $(element).modal({
+            onHide: function () { pageRef.invokeMethodAsync('NotifySingleInputModalViewSemanticHidden'); return true; },
 
-        $(element).on('hide.bs.modal', function (e) {
-            pageRef.invokeMethodAsync('NotifySingleInputModalViewHidden');
+            onApprove: function () { pageRef.invokeMethodAsync('NotifySingleInputModalViewSemanticApproved'); return true; }
         });
+
 
     },
 

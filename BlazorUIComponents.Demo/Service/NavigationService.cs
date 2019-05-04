@@ -26,7 +26,8 @@ namespace BlazorUIComponents.Demo.Service
             //{ typeof(FetchDataViewModel), (vm) => $"course/{((fetchdata)vm).Course.Id}" },
             { typeof(FetchDataViewModel), (vm) => $"fetchdata" },
             { typeof(CounterViewModel), (vm) => $"counter" },
-            { typeof(ListViewDemoViewModel), (vm) => $"listview" }
+            { typeof(ListViewDemoViewModel), (vm) => $"listview" },
+            { typeof(GroupedListViewDemoViewModel), (vm) => $"groupedlistview" }
         };
 
         string GeneratePath(object vm)

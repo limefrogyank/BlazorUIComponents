@@ -1,6 +1,6 @@
-﻿@page "/listview"
+﻿@page "/groupedlistview"
 
-@inherits BlazorUIComponents.Demo.Components.NavPageBase<BlazorUIComponents.Core.ViewModel.ListViewDemoViewModel>
+@inherits BlazorUIComponents.Demo.Components.NavPageBase<BlazorUIComponents.Core.ViewModel.GroupedListViewDemoViewModel>
 @inject IJSRuntime JSRuntime
 
 @using BlazorUIComponents.Core.ViewModel.ListViewDemo;
@@ -25,14 +25,16 @@
 @if (Vm != null)
 {
     <BlazorUIComponents.Controls.ListView ItemsSource=@Vm.SampleItemViewModels
+                                          IsGrouped="true"
+                                          GroupingKey="Key"
                                           SelectionMode=@(isChecked ? SelectionMode.Single : SelectionMode.None)
                                           bind-SelectedItem-OnSelectedItemChanged=@Vm.SelectedItem
                                           ItemClicked=@OnItemClicked>
         <ItemTemplate Context="listitem">
             <div class="ui header">
                 <div class="content">
-                    @(((BlazorUIComponents.Core.ViewModel.ListViewDemo.SampleItemViewModel)listitem).DisplayName)
-                        <div class="sub header">@(((BlazorUIComponents.Core.ViewModel.ListViewDemo.SampleItemViewModel)listitem).Date)</div>
+                    @(((SampleItemViewModel)listitem).DisplayName)
+                    <div class="sub header">@(((SampleItemViewModel)listitem).Date)</div>
                 </div>
 
             </div>
@@ -49,7 +51,7 @@
 
     Task OnItemClicked(object item)
     {
-        var model = (Core.ViewModel.ListViewDemo.SampleItemViewModel)item;
+        var model = (SampleItemViewModel)item;
         Vm.SampleItemClickCommand.Execute(model).Subscribe();
         return Task.CompletedTask;
     }

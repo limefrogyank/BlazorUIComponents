@@ -1,32 +1,60 @@
 ﻿@using Microsoft.AspNetCore.Components
 @using System.Collections.Specialized
+@using System.Collections
 @using BlazorUIComponents.Controls
 
 
-@typeparam TItem;
-
 @inherits ComponentBase
 
-<CascadingValue Value=this>
-    <div class="ui middle aligned big divided selection list">
-        @if (ItemsSource != null)
-        {
-        @for (var i = 0; i < ItemsSource.Count; i++)
-        {
-            var index = i;
-            var item = ItemsSource.ElementAt(index);
-            <ListViewItem Model=@item
-                          TItem="TItem"
-                          Index=@index
-                          ActiveItem=@SelectedItem
-                          Classes=@(baseClasses)
-                          ItemClicked=@(e => OnItemClick(e, item))>
-                @ItemTemplate(item)
-            </ListViewItem>
-        }
-        }
-    </div>
-</CascadingValue>
+    <CascadingValue Value=this>
+        <div class="ui middle aligned big divided selection list">
+            @if (ItemsSource != null)
+            {
+                @if (IsGrouped)
+                {
+                    int index = 0;
+                    @foreach (var group in (IEnumerable)ItemsSource)
+                    {
+                        <ListViewGroup Model=@group
+                                       DisplayName=@(group.GetType().GetProperty(GroupingKey).GetValue(group).ToString())>
+                           
+                            @foreach (var item in (IEnumerable)group)
+                            {
+                                <ListViewItem Model=@item
+                                              Index=@index
+                                              ActiveItem=@SelectedItem
+                                              Classes=@(baseClasses)
+                                              ItemClicked=@(e => OnItemClick(e, item))>
+                                    @ItemTemplate(item)
+                                </ListViewItem>
+
+
+                                index++;
+
+                            }
+                        </ListViewGroup>
+                        
+                    }
+                }
+                else
+                {
+                    int index = 0;
+                    @foreach (var item in (IEnumerable)ItemsSource)
+                    {                        
+                        <ListViewItem Model=@item
+                                      Index=@index
+                                      ActiveItem=@SelectedItem
+                                      Classes=@(baseClasses)
+                                      ItemClicked=@(e => OnItemClick(e, item))>
+                            @ItemTemplate(item)
+                        </ListViewItem>
+
+                        index++;
+                    }
+                }
+            }
+        </div>
+    </CascadingValue>
 
 @functions{
     private INotifyCollectionChanged notifyCollectionChanged;
@@ -34,13 +62,20 @@
     private SelectionMode selectionMode = SelectionMode.None;
 
     [Parameter]
-    public TItem SelectedItem { get; private set; }
+    public object SelectedItem { get; private set; }
 
     [Parameter]
-    public ICollection<TItem> ItemsSource { get; private set; }
+    public object ItemsSource { get; private set; }
 
     [Parameter]
-    private RenderFragment<TItem> ItemTemplate { get; set; }
+    private RenderFragment<object> ItemTemplate { get; set; }
+
+    [Parameter]
+    private bool IsGrouped { get; set; }
+
+    [Parameter]
+    private string GroupingKey { get; set; }
+
 
     [Parameter]
     public SelectionMode SelectionMode
@@ -51,19 +86,19 @@
             selectionMode = value;
             if (selectionMode == SelectionMode.None)
             {
-                SetSelectedItem(default(TItem));
+                SetSelectedItem(default(object));
             }
         }
     }
 
     [Parameter]
-    public Action<TItem> OnSelectedItemChanged { get; private set; }
+    public Action<object> OnSelectedItemChanged { get; private set; }
 
     [Parameter]
-    private Func<TItem, Task> ItemClicked { get; set; }
+    private Func<object, Task> ItemClicked { get; set; }
 
 
-    public void SetSelectedItem(TItem selectedItem)
+    public void SetSelectedItem(object selectedItem)
     {
         SelectedItem = selectedItem;
         if (OnSelectedItemChanged != null)
@@ -84,12 +119,39 @@
         {
             if (notifyCollectionChanged != null)
             {
+                //unsubscribe all the old stuff
                 notifyCollectionChanged.CollectionChanged -= CollectionChanged;
+                //including grouped collections
+                if (IsGrouped)
+                {
+                    foreach (var group in (IEnumerable)ItemsSource)
+                    {
+                        if (group is INotifyCollectionChanged)
+                        {
+                            notifyCollectionChanged = (INotifyCollectionChanged)group;
+                            notifyCollectionChanged.CollectionChanged -= SubCollectionChanged;
+                        }
+                    }
+                }
             }
+            //now subscribe to new collection
             if (ItemsSource is INotifyCollectionChanged)
             {
                 notifyCollectionChanged = (INotifyCollectionChanged)ItemsSource;
                 notifyCollectionChanged.CollectionChanged += CollectionChanged;
+            }
+
+            //check if grouped and subscribe to internal collections
+            if (IsGrouped)
+            {
+                foreach (var group in (IEnumerable)ItemsSource)
+                {
+                    if (group is INotifyCollectionChanged)
+                    {
+                        notifyCollectionChanged = (INotifyCollectionChanged)group;
+                        notifyCollectionChanged.CollectionChanged += SubCollectionChanged;
+                    }
+                }
             }
         }
 
@@ -97,7 +159,7 @@
     }
 
 
-    private Task OnItemClick(UIMouseEventArgs e, TItem item)
+    private Task OnItemClick(UIMouseEventArgs e, object item)
     {
         if (SelectionMode == SelectionMode.None)
         {
@@ -114,6 +176,40 @@
     }
 
     private void CollectionChanged(object sender, NotifyCollectionChangedEventArgs args)
+    {
+        // is this a change to a grouped collection? 
+        if (IsGrouped)
+        {
+            if (args.Action == NotifyCollectionChangedAction.Add)
+            {                
+                //need to subscribe grouped collections
+                foreach (var group in args.NewItems)
+                {
+                    if (group is INotifyCollectionChanged)
+                    {
+                        notifyCollectionChanged = (INotifyCollectionChanged)group;
+                        notifyCollectionChanged.CollectionChanged += SubCollectionChanged;
+                    }
+                }
+            }
+            if (args.Action == NotifyCollectionChangedAction.Remove)
+            {
+                //need to unsubscribe grouped collections
+                foreach (var group in args.OldItems)
+                {
+                    if (group is INotifyCollectionChanged)
+                    {
+                        notifyCollectionChanged = (INotifyCollectionChanged)group;
+                        notifyCollectionChanged.CollectionChanged -= SubCollectionChanged;
+                    }
+                }
+            }
+        }
+
+        Invoke(() => StateHasChanged());
+    }
+
+    private void SubCollectionChanged(object sender, NotifyCollectionChangedEventArgs args)
     {
         Invoke(() => StateHasChanged());
     }
