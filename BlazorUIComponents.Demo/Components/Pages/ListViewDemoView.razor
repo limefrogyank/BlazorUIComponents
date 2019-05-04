@@ -28,14 +28,23 @@
                                           SelectionMode=@(isChecked ? SelectionMode.Single : SelectionMode.None)
                                           bind-SelectedItem-OnSelectedItemChanged=@Vm.SelectedItem
                                           ItemClicked=@OnItemClicked>
-        <ItemTemplate Context="listitem">
-            <div class="ui header">
+        <ItemTemplate Context="data">
+            <DataTemplate TItem="BlazorUIComponents.Core.ViewModel.ListViewDemo.SampleItemViewModel" DataContext=@data >
+                <div class="ui header">
+                    <div class="content">
+                        @context.DisplayName
+                        <div class="sub header">@context.Date</div>
+                    </div>
+
+                </div>
+            </DataTemplate>
+            @*<div class="ui header">
                 <div class="content">
                     @(((BlazorUIComponents.Core.ViewModel.ListViewDemo.SampleItemViewModel)listitem).DisplayName)
                         <div class="sub header">@(((BlazorUIComponents.Core.ViewModel.ListViewDemo.SampleItemViewModel)listitem).Date)</div>
                 </div>
 
-            </div>
+            </div>*@
 
         </ItemTemplate>
     </BlazorUIComponents.Controls.ListView>

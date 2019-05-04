@@ -1,0 +1,22 @@
+﻿@using Microsoft.AspNetCore.Components
+@using System.Collections.Specialized
+@using BlazorUIComponents.Controls
+
+@inherits ComponentBase
+
+@typeparam TItem
+        @ChildContent((TItem)DataContext)
+
+        @functions{
+            //private TItem context;
+            //[CascadingParameter] protected object context { get; set; }
+
+            [Parameter]
+            private object DataContext { get; set; }
+
+            [Parameter]
+            private RenderFragment<TItem> ChildContent { get; set; }
+
+
+
+        }
