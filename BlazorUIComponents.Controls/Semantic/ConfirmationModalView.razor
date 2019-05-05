@@ -11,8 +11,28 @@
 
 @inherits ComponentBase
 
+<div class="ui basic modal" ref="modal">
+    <div class="ui icon header">
+        <i class="exclamation triangle icon"></i>
+        @Title
+    </div>
+    <div class="content">
+        <p>@Description</p>
+    </div>
+    <div class="actions">
+        <div class="ui red basic cancel inverted button">
+            <i class="remove icon"></i>
+            Cancel
+        </div>
+        <div class="ui green ok inverted button">
+            <i class="checkmark icon"></i>
+            Confirm
+        </div>
+    </div>
 
-<div class="ui modal" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" ref="modal">
+</div>
+
+@*<div class="ui modal" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" ref="modal">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -32,23 +52,28 @@
             </div>
         </div>
     </div>
-</div>
+</div>*@
 
 @functions{
-        ElementRef modal;
-        string Title;
-        string Description;
+    ElementRef modal;
+    string Title;
+    string Description;
 
-        AsyncManualResetEvent<bool> asyncManualResetEvent = new AsyncManualResetEvent<bool>();
+    bool isInitialized = false;
+
+    AsyncManualResetEvent<bool> asyncManualResetEvent = new AsyncManualResetEvent<bool>();
 
     protected override async Task OnAfterRenderAsync()
     {
-        await JSRuntime.InvokeAsync<object>("confirmationModalViewSemantic.initialize", modal, new DotNetObjectRef(this));
+        if (!isInitialized)
+        {
+            await JSRuntime.InvokeAsync<object>("confirmationModalViewSemantic.initialize", modal, new DotNetObjectRef(this));
+        }
         await base.OnAfterRenderAsync();
     }
 
     [JSInvokable]
-    public void NotifyConfirmationModalViewHiddenSemantic()
+    public void NotifyConfirmationModalViewSemanticHidden()
     {
         if (asyncManualResetEvent.IsReset)
         {
@@ -57,11 +82,13 @@
         }
     }
 
-    async Task OnSubmitClicked(UIMouseEventArgs e)
+    [JSInvokable]
+    public void NotifyConfirmationModalViewSemanticApproved()
     {
         asyncManualResetEvent.Set(true);
-        await JSRuntime.InvokeAsync<object>("confirmationModalViewSemantic.hideModal", modal);
     }
+
+ 
 
     async Task OnKeyPressed(UIKeyboardEventArgs e)
     {

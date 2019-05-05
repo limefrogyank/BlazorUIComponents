@@ -9,7 +9,7 @@
 
     <div class="ui basic modal" ref="modal">
         <div class="ui icon header">
-            <i class="archive icon"></i>
+            <i class="pencil alternate icon"></i>
             @Title
         </div>
         <div class="content">
@@ -75,12 +75,7 @@
         asyncManualResetEvent.Set(InputValue);
     }
 
-    async Task OnSubmitClicked(UIMouseEventArgs e)
-    {
-        asyncManualResetEvent.Set(InputValue);
-        await JSRuntime.InvokeAsync<object>("singleInputModalViewSemantic.hideModal", modal);
-    }
-
+    
     async Task OnKeyPressed(UIKeyboardEventArgs e)
     {
         if (e.Key == "Enter")

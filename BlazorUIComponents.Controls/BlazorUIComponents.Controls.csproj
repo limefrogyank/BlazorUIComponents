@@ -26,9 +26,17 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Remove="content\confirmationModalViewSemantic.js" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="content\confirmationModalViewSemantic.js" />
     <None Remove="content\dropdown.js" />
     <None Remove="content\singleInputModalViewSemantic.js" />
+    <Content Include="content\confirmationModalViewSemantic.js">
+      <LogicalName>blazor:js:%(RecursiveDir)%(Filename)%(Extension)</LogicalName>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
     <None Include="..\LICENSE">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
@@ -44,9 +52,6 @@
  
 
   <ItemGroup>
-    <EmbeddedResource Update="content\confirmationModalViewSemantic.js">
-      <LogicalName>blazor:js:%(RecursiveDir)%(Filename)%(Extension)</LogicalName>
-    </EmbeddedResource>
     <EmbeddedResource Update="content\singleInputModalViewSemantic.js">
       <LogicalName>blazor:js:%(RecursiveDir)%(Filename)%(Extension)</LogicalName>
     </EmbeddedResource>

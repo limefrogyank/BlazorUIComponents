@@ -8,7 +8,7 @@
             onApprove: function () { pageRef.invokeMethodAsync('NotifySingleInputModalViewSemanticApproved'); return true; }
         });
 
-
+       
     },
 
     showModal: function (element) {
