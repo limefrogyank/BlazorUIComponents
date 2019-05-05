@@ -7,7 +7,7 @@
 @inherits ComponentBase
 
     <CascadingValue Value=this>
-        <div class="ui middle aligned big divided selection list">
+        <div class="ui middle aligned big divided selection list" style="overflow: auto;">
             @if (ItemsSource != null)
             {
                 @if (IsGrouped)

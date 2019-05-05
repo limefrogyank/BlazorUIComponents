@@ -27,6 +27,7 @@
 
   <ItemGroup>
     <EmbeddedResource Remove="content\confirmationModalViewSemantic.js" />
+    <EmbeddedResource Remove="content\singleInputModalViewSemantic.js" />
   </ItemGroup>
 
   <ItemGroup>
@@ -34,6 +35,10 @@
     <None Remove="content\dropdown.js" />
     <None Remove="content\singleInputModalViewSemantic.js" />
     <Content Include="content\confirmationModalViewSemantic.js">
+      <LogicalName>blazor:js:%(RecursiveDir)%(Filename)%(Extension)</LogicalName>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="content\singleInputModalViewSemantic.js">
       <LogicalName>blazor:js:%(RecursiveDir)%(Filename)%(Extension)</LogicalName>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
@@ -48,13 +53,6 @@
     <PackageReference Include="Microsoft.AspNetCore.Components.Browser" Version="3.0.0-preview4-19216-03" />
     <PackageReference Include="ReactiveUI" Version="9.13.1" />
     <PackageReference Include="System.Reactive.Linq" Version="4.1.5" />
-  </ItemGroup>
- 
-
-  <ItemGroup>
-    <EmbeddedResource Update="content\singleInputModalViewSemantic.js">
-      <LogicalName>blazor:js:%(RecursiveDir)%(Filename)%(Extension)</LogicalName>
-    </EmbeddedResource>
   </ItemGroup>
 
   <!--<ItemGroup>
