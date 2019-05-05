@@ -1,19 +1,25 @@
 @inherits ReactiveBase
 @inject IComponentContext componentContext
+@inject IJSRuntime JSRuntime
 
-<div class="top-row pl-4 navbar navbar-dark">
-     <button class="ui icon button navbar-toggler" onclick="@ToggleNavMenu">
-        <i class="bars icon"></i>
-    </button>
-     <div class="item header">BlazorUIComponents.Demo</div>
-</div>
+    <div style="display:flex;">
+        <button class="ui icon button navbar-toggler" style="border-radius: 0px;" onclick="@ToggleNavMenu">
+            <i class="bars icon"></i>
+        </button>
+        <div class="ui fluid menu vertical" style="border-radius: 0px; border-width:0px; margin: 0px; box-shadow:none;">
+            <div class="item" style="height: 40px;">
+
+                <a class=" header" href="courses">BlazorUIComponents</a>
+            </div>
+        </div>
+    </div>
 
    
 
 
 @if (Vm != null)
 {
-<div class="@NavMenuCssClass" onclick="@ToggleNavMenu">
+<div class="collapse" onclick="@ToggleNavMenu" ref="menuRef">
     <div class="ui fluid massive vertical menu">
 
         <ReactiveNavLink Classes="link item"
@@ -56,6 +62,8 @@
 }
 
 @functions {
+     ElementRef menuRef;
+
     bool isInitialized = false;
     bool collapseNavMenu = true;
 
@@ -100,8 +108,16 @@
     }
 
 
-    void ToggleNavMenu()
+    async void ToggleNavMenu()
     {
         collapseNavMenu = !collapseNavMenu;
+         if (collapseNavMenu)
+        {
+            await JSRuntime.InvokeAsync<object>("hideMenu", menuRef);
+        }
+        else
+        {
+            await JSRuntime.InvokeAsync<object>("showMenu", menuRef);
+        }
     }
 }
