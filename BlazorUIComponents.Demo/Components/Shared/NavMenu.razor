@@ -62,15 +62,15 @@
 }
 
 @functions {
-     ElementRef menuRef;
+        ElementRef menuRef;
 
-    bool isInitialized = false;
-    bool collapseNavMenu = true;
+        bool isInitialized = false;
+        bool collapseNavMenu = true;
 
-    string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+        string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
 
-    MainViewModel Vm;
-    INavigationService navigationService;
+        MainViewModel Vm;
+        INavigationService navigationService;
 
 
     //async Task OnClickAsync(string href)
@@ -110,14 +110,18 @@
 
     async void ToggleNavMenu()
     {
-        collapseNavMenu = !collapseNavMenu;
-         if (collapseNavMenu)
+        var match = await JSRuntime.InvokeAsync<bool>("matchesMediaQuery", "(max-width: 767.98px)");
+        if (match)
         {
-            await JSRuntime.InvokeAsync<object>("hideMenu", menuRef);
-        }
-        else
-        {
-            await JSRuntime.InvokeAsync<object>("showMenu", menuRef);
+            collapseNavMenu = !collapseNavMenu;
+            if (collapseNavMenu)
+            {
+                await JSRuntime.InvokeAsync<object>("hideMenu", menuRef);
+            }
+            else
+            {
+                await JSRuntime.InvokeAsync<object>("showMenu", menuRef);
+            }
         }
     }
 }
