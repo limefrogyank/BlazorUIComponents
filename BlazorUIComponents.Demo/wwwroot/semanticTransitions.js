@@ -1,6 +1,4 @@
 ﻿function showMenu(element) {
-    //var x = window.matchMedia("(max-width: 767.98px)");
-    //if (x.matches) {
         $(element).removeClass("collapse");
         $(element).transition({
             animation: 'slide down in',
@@ -8,12 +6,9 @@
 
             }
         });
-    //}
 }
 
 function hideMenu(element) {
-    //var x = window.matchMedia("(max-width: 767.98px)");
-    //if (x.matches) {
         $(element).transition({
             animation: 'slide down out',
             onComplete: function () {
@@ -21,7 +16,6 @@ function hideMenu(element) {
                 $(element).removeClass("hidden");
             }
         });
-    //}
 }
 
 function matchesMediaQuery(query) {
