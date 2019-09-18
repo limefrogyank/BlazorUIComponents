@@ -1,3 +1,6 @@
+Not working on this anymore... I've since been working on a direct Fabric port to Blazor controls.  
+https://github.com/limefrogyank/BlazorFabric
+
 # BlazorUIComponents
 At attempt to make Blazor components that mimic UWP/Xamarin controls, follow MVVM (ViewModel nav) guidelines, and use the ReactiveUI framework.
 
